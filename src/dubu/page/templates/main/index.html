@@ -1,0 +1,339 @@
+{% comment %} mainpage {% endcomment %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>DuBu</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% comment %} dubu_make {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/dubu_made/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dubu_made/m_index.css' %}">
+
+    
+  </head>
+  <body>
+  
+<!--start nav-->
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="{% url 'index' %}">DuBu</a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+            <li class="nav-item active"><a href="{% url 'reservation' %}" class="nav-link">Reservation</a></li>
+            {% if login %} 
+	            <li class="nav-item active"><a href="{% url 'logout' %}" class="nav-link">Log out</a></li>
+              <li class="nav-item active"><a href="{% url 'mypage' %}" class="nav-link">My page</a></li>
+            {% else %}
+              <li class="nav-item active"><a href="{% url 'login' %}" class="nav-link">Log in</a></li>
+              <li class="nav-item active"><a href="{% url 'join' %}" class="nav-link">Join</a></li>
+            {% endif %}
+            {% comment %}  {% endcomment %}
+            <li class="nav-item active"><a href="{% url 'about' %}" class="nav-link">About hotel</a></li>
+            {% comment %} <li class="nav-item active"><a href="{% url 'event' %}" class="nav-link">Event</a></li> {% endcomment %}
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+<!-- END nav -->
+
+{% comment %} top : title + background {% endcomment %}
+  <section class=" home-slider owl-carousel " style="min-height:1000px" >
+    {% comment %} style=" background-image:url({% static 'images/bg_1.jpg' %});" {% endcomment %}
+      <div class="slider-item m_back " style="min-height:1200px;" >
+        <div class="overlay "></div>
+        <div class="container ">
+          <div class="row no-gutters slider-text align-items-center justify-content-center ">
+          <div class="col-md-12 ftco-animate text-center ">
+            <div class="text mb-5 pb-3 ">
+              <h1 class="mb-3 ">Welcome To DuBu</h1>
+              <h2>Hotels</h2>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+    {% comment %} style=" background-image:url({% static 'images/bg_1.jpg' %});" {% endcomment %}
+      <div class="slider-item m_back  " style="min-height:1200px;">
+        <div class="overlay "></div>
+        <div class="container ">
+          <div class="row no-gutters slider-text align-items-center justify-content-center ">
+          <div class="col-md-12 ftco-animate text-center ">
+            <div class="text mb-5 pb-3 ">
+              <h1 class="mb-3 ">Enjoy A Luxury Experience</h1>
+              <h2>Join Us</h2>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+  </section>
+{% comment %} top : title + background {% endcomment %}
+{% comment %} 검색 입력 기능 시작 {% endcomment %}
+<form method='POST' action = "{% url 'reservation2' %}">
+{% csrf_token %}
+  <input type="text" name="method" class="form-control" value="reservation" style="display:none" readonly>
+    <section class="ftco-booking">
+    	<div class="container" style = "min-width: 500px;">
+    		<div class="row">
+    			<div class="col-lg-12">
+    				<form action="#" class="booking-form">
+	        		<div class="row">
+	        			<div class="col-md-3 d-flex" style = "height: 160px;">
+	        				<div class="form-group p-4 d-flex align-items-end">
+	        					<div class="wrap" style = "padding-bottom: 40px;">
+				    					<label for="#">Check-in</label>
+				    					<input type="date" name="check_in" class="form-control" placeholder="Check-in date" style="width: 219px;">
+			    					</div>
+			    				</div>
+	        			</div>
+	        			<div class="col-md-3 d-flex" style = "height: 160px;">
+	        				<div class="form-group p-4 d-flex align-items-end">
+	        					<div class="wrap" style = "padding-bottom: 40px;">
+				    					<label for="#">Check-out</label>
+				    					<input type="date" name="check_out" class="form-control" placeholder="Check-out date" style="width: 219px;">
+			    				</div>
+			    				</div>
+	        			</div>
+	        			<div class="d-flex" style = "height: 160px;">
+	        				<div class="form-group p-4 d-flex align-items-end">
+	        					<div class="wrap" style = "padding-bottom: 40px;">
+			      					<label for="#">Adult</label>
+			      					<div class="form-field">
+			        					<div class="select-wrap">
+			                    
+			                    <select name="adult_num" id="" class="form-control" style="width: 126px;">
+			                    	<option value="1">1</option>
+			                      <option value="2">2</option>
+			                      <option value="3">3</option>
+                            <option value="4">4</option>
+			                    </select>
+			                  </div>
+				              </div>
+				            </div>
+                  </div>
+                </div>
+
+	        			<div class="d-flex" style = "height: 160px;">
+	        				<div class="form-group p-4 d-flex align-items-end">
+	        					<div class="wrap" style = "padding-bottom: 40px;">
+			      					<label for="#">Child</label>
+			      					<div class="form-field">
+			        					<div class="select-wrap">
+                          
+			                    <select name="child_num" id="" class="form-control" style="width: 126px;">
+                            <option value="0">0</option>
+			                    	<option value="1">1</option>
+			                      <option value="2">2</option>
+			                      <option value="3">3</option>
+                            <option value="4">4</option>
+			                    </select>
+			                  </div>
+				              </div>
+				            </div>
+		              </div>
+	        			</div>
+	        			<div class="col-md d-flex">
+	        				<div class="form-group d-flex align-self-stretch">
+			              <input type="submit" value="Check Availability" class="btn btn-primary py-3 px-4 align-self-stretch" style="height: 70px; margin-top: 20px; margin-left: 15px;">
+			            </div>
+	        			</div>
+	        		</div>
+	        	</form>
+	    		</div>
+    		</div>
+    	</div>
+    </section>
+</form>
+{% comment %} <div style="background-color: rgb(84,84,84); min-height:300px;margin-top:-10px;">
+</div> {% endcomment %}
+{% comment %} main section  {% endcomment %}
+<div class="main_a " style="margin-top: 250px;">
+    <section class="event_info" style="margin-bottom: 250px;">
+      <div class="about_main_title" style="padding-bottom: 40px;">Event</div>
+      <div id="slide">
+        <input type="radio" name="pos" id="pos1" checked>
+        <input type="radio" name="pos" id="pos2">
+        <input type="radio" name="pos" id="pos3">
+        <input type="radio" name="pos" id="pos4">
+        <ul class="t">
+          <li>
+            <div class="event_s e_test col_c">
+        
+              <div class = "container">
+
+                <img src = "{% static 'images/tofustake.jpeg' %}" style = "width: 400px; height: 320px;">
+                <div class="sub_title_e" style="padding-top: 30px; padding-bottom: 10px;">Course Cooking Tofu</div>
+                <div style = "padding-top: 0px; margin-bottom: 100px;">두부 스테이크를 메인으로한 두부 코스 요리</div>
+
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="event_s e_test col_c">
+              <div class = "image">
+
+                <img src = "{% static 'images/rooptop.jpg' %}" style = "width: 400px; height: 320px;">
+                <div class="sub_title_e" style="padding-top: 30px; padding-bottom: 10px;">Rooptop HotWater Pool</div>
+                <div style = "padding-top: 0px; margin-bottom: 100px;">따뜻한 겨울을 보내기 위한 루프탑 온수풀 오픈</div>
+
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="event_s e_test col_c">
+              <div class = "image">
+
+                <img src = "{% static 'images/christmas.jpg' %}" style = "width: 400px; height: 320px;">
+                <div class="sub_title_e" style="padding-top: 30px; padding-bottom: 10px;">Christmas Wishes</div>
+                <div style = "padding-top: 0px; margin-bottom: 100px;">다가오는 크리스마스, 소원을 말해봐~</div>
+
+              </div>
+            </div>
+          </li>
+        </ul>
+        <p class="pos" style="top: 325px;">
+          <label for="pos1"></label>
+          <label for="pos2"></label>
+          <label for="pos3"></label>
+        </p>
+      </div>
+    </section>
+</div>
+<!-- footer -->
+<footer class="ftco-footer ftco-bg-dark ftco-section" style ="padding-bottom: 30px;">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2" style = "text-align: center; font-size: 40px">DuBu Hotel</h2>
+          <p style= "text-align: center;">For a comfortable time.</p>
+          <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5" style = "padding-left: 85px;">
+{% comment %} 링크 추가 혹은 제거 해야합니다 {% endcomment %}
+            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4 ml-md-5">
+          <h2 class="ftco-heading-2" style = "font-size: 25px">Quick Menu</h2>
+          <ul class="list-unstyled">
+            <!-- <li><a href="#" class="py-2 d-block">Blog</a></li> -->
+            <!-- <li><a href="#" class="py-2 d-block">Rooms</a></li> -->
+            {% if login %} 
+              <li><a href="{% url 'mypage' %}" class="py-2 d-block">My page</a></li>
+            {% else %}
+              <li><a href="{% url 'join' %}" class="py-2 d-block">Join</a></li>
+            {% endif %}
+            <li><a href="{% url 'reservation' %}" class="py-2 d-block">Reservation</a></li>
+            <li><a href="{% url 'about' %}" class="py-2 d-block">About hotel</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- <div class="col-md">
+         <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2">Privacy</h2>
+          <ul class="list-unstyled">
+            <li><a href="#" class="py-2 d-block">Career</a></li>
+            <li><a href="#" class="py-2 d-block">About Us</a></li>
+            <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+            <li><a href="#" class="py-2 d-block">Services</a></li>
+          </ul>
+        </div>
+      </div> -->
+      <div class="col-md">
+        <div class="ftco-footer-widget mb-4">
+          <h2 class="ftco-heading-2" style = "font-size: 25px">About Hotel</h2>
+          <div class="block-23 mb-3">
+            <ul>
+              <li><a href="#"><span class="icon icon-map-marker"></span><span class="text">경기도 안산시 상록수 사동 한양대학교 55</span></a></li>
+              <li><a href="#"><span class="icon icon-phone"></span><span class="text">031-436-8000</span></a></li>
+              <li><a href="#"><span class="icon icon-envelope"></span><span class="text">ericadubu@gmail.com</span></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+
+        <!-- <p>Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.</p> -->
+      </div>
+    </div>
+  </div>
+</footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+  <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+  <script src="{% static 'js/scrollax.min.js' %}"></script>
+  <script src="{% static 'js/google-map.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+
+<!--  log in
+  <script>
+    funcction fnLoginToggle(){};
+    $(function(){
+      if(window.T.config.User.name){
+        $('#tab_login_toggle').text('로그아웃');
+        {% comment %} fnLoginToggle=function(){
+          
+        } {% endcomment %}
+      }else{
+        $('#tab_login_toggle').text('로그인');
+      }
+    })
+  </script>-->
+    
+  </body>
+</html>
