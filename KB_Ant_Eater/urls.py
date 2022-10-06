@@ -16,9 +16,20 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+import page.views
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('page/', include('page.urls')),
-    path('', include('page.urls')),
+    #path('page/', include('page.urls')),
+    #path('', include('page.urls')),
+    path('', page.views.home, name='home'),
+    # path('', page.views.add_stock, name='add_stock'),
+    # path('', page.views.alike_stock, name='alilke_stock'),
+    # path('', page.views.live_stock, name='live_stock'),
+    # path('', page.views.login, name='login'),
+    # path('', page.views.mystock, name='mystock'),
+    # path('', page.views.news, name='news'),
+    # path('', page.views.signup, name='signup'),
+    # path('', page.views.top5, name='top5'),
 ]
