@@ -18,6 +18,12 @@ def home(request):
 def live_stock(request):
     return render(request, 'live_stock.html')
 
+def login(request):
+    return render(request, 'login.html')
+
+def mystock(request):
+    return render(request, 'mystock.html')    
+
 def news(request):
     return render(request, 'news.html')
 
