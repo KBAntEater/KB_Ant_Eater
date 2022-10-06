@@ -1,6 +1,7 @@
 import re
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import *
 
 # Create your views here.
 def index(request):
@@ -32,3 +33,10 @@ def signup(request):
 
 def top5(request):
     return render(request, 'top5.html')
+
+def dbconn(request):
+    result = models.objects.all()
+    data = {
+        'result': result,
+    }
+    return render(request, 'dbconn.html', data)
