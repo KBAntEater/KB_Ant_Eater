@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
   <div class="container my-3">
-    <form method="post" action="{% url 'common:login' %}">
+    <form class='auth' method="post" action="{% url 'common:login' %}">
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ next }}">  <!-- 로그인 성공후 이동되는 URL -->
       {% include "form_errors.html" %}
+      <h1 class='auth-text'>로그인</h1>
       <div class="mb-3">
-        <label for="username">사용자ID</label>
+        <label for="username">아이디</label>
         <input type="text" class="form-control" name="username" id="username" value="{{ form.username.value|default_if_none:'' }}">
       </div>
       <div class="mb-3">
