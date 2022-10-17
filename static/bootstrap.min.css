@@ -4,6 +4,12 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+
+@font-face {
+  font-family: "BMHANNApro";
+  src: url("./BMHANNAPro.ttf") format("truetype");
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -11,7 +17,7 @@
   --bs-pink: #d63384;
   --bs-red: #dc3545;
   --bs-orange: #fd7e14;
-  --bs-yellow: #ffc107;
+  --bs-yellow: #ffbe33;
   --bs-green: #198754;
   --bs-teal: #20c997;
   --bs-cyan: #0dcaf0;
@@ -47,6 +53,7 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 255, 255, 255;
+  --bs-font-BM-HANNA: "BMHANNApro";
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -57,7 +64,7 @@
     rgba(255, 255, 255, 0.15),
     rgba(255, 255, 255, 0)
   );
-  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-family: var(--bs-font-BM-HANNA);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -162,8 +169,9 @@ h6 {
   font-size: 1rem;
 }
 p {
-  margin-top: 0;
-  margin-bottom: 1rem;
+  margin: 0;
+  /* margin-top: 0; */
+  /* margin-bottom: 1rem; */
 }
 abbr[data-bs-original-title],
 abbr[title] {
@@ -231,11 +239,11 @@ sup {
   top: -0.5em;
 }
 a {
-  color: #0d6efd;
+  color: #fff;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a58ca;
+  color: #ffbe33;
 }
 a:not([href]):not([class]),
 a:not([href]):not([class]):hover {
@@ -2689,20 +2697,21 @@ fieldset:disabled .btn {
 }
 .btn-primary {
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: var(--bs-yellow);
+  border-color: var(--bs-yellow);
 }
-.btn-primary:hover {
-  color: #fff;
+
+/* .btn-primary:hover {
+  color: #fff; #0d6efd; #0d6efd;
   background-color: #0b5ed7;
   border-color: #0a58ca;
-}
+} */
 .btn-check:focus + .btn-primary,
 .btn-primary:focus {
   color: #fff;
-  background-color: #0b5ed7;
-  border-color: #0a58ca;
-  box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+  background-color: var(--bs-yellow);
+  border-color: var(--bs-yellow);
+  /* box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5); */
 }
 .btn-check:active + .btn-primary,
 .btn-check:checked + .btn-primary,
@@ -2710,21 +2719,21 @@ fieldset:disabled .btn {
 .btn-primary:active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #0a58ca;
-  border-color: #0a53be;
+  background-color: var(--bs-yellow);
+  border-color: var(--bs-yellow);
 }
 .btn-check:active + .btn-primary:focus,
 .btn-check:checked + .btn-primary:focus,
 .btn-primary.active:focus,
 .btn-primary:active:focus,
 .show > .btn-primary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5);
+  /* box-shadow: 0 0 0 0.25rem rgba(49, 132, 253, 0.5); */
 }
 .btn-primary.disabled,
 .btn-primary:disabled {
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: var(--bs-yellow);
+  border-color: var(--bs-yellow);
 }
 .btn-secondary {
   color: #fff;
@@ -3725,7 +3734,7 @@ fieldset:disabled .btn {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
-  color: #0d6efd;
+  color: #fff;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out;
@@ -4336,6 +4345,8 @@ fieldset:disabled .btn {
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+
+  display: flex;
 }
 .card-header:first-child {
   border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
@@ -5477,7 +5488,7 @@ fieldset:disabled .btn {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: var(--bs-font-sans-serif);
+  font-family: var(--bs-font-BM-HANNA);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5585,7 +5596,7 @@ fieldset:disabled .btn {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: var(--bs-font-sans-serif);
+  font-family: var(--bs-font-BM-HANNA);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -6863,7 +6874,7 @@ fieldset:disabled .btn {
   margin-bottom: 0.5rem !important;
 }
 .mb-3 {
-  margin-bottom: 1rem !important;
+  margin-bottom: 2rem !important;
 }
 .mb-4 {
   margin-bottom: 1.5rem !important;
@@ -9868,3 +9879,112 @@ fieldset:disabled .btn {
   }
 }
 /*# sourceMappingURL=bootstrap.min.css.map */
+
+/* style.css */
+.hero_area {
+  position: relative;
+  /* min-height: 100vh; */
+  background-color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.header_section1 {
+  padding: 15px 0;
+}
+
+.header_section1 .container-fluid {
+  padding-right: 25px;
+  padding-left: 25px;
+}
+
+.navbar-brand span {
+  font-weight: bold;
+  font-size: 25px;
+  color: #ffffff;
+}
+
+.custom_nav-container .navbar-nav .nav-item:hover .nav-link,
+.custom_nav-container .navbar-nav .nav-item.active .nav-link {
+  color: #ffbe33;
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+/* login, signup */
+.user_option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.user_option a {
+  margin: 0 10px;
+}
+
+.user_option .user_link {
+  color: #ffffff;
+}
+
+.user_option .user_link:hover {
+  color: #ffbe33;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+
+.sub_page {
+  height: 100vh;
+}
+
+.container.my-3 {
+  height: calc(100% - 150px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth {
+  width: 25%;
+  align-items: center;
+}
+
+.auth2 {
+  width: 35%;
+  align-items: center;
+}
+
+.auth-text {
+  margin-bottom: 50px;
+}
+
+.card-container {
+  margin: 50px 0px;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-detail {
+  border-radius: 35px;
+  width: 80px;
+  height: 25px;
+  font-size: 12px;
+  padding: 0px;
+  position: absolute;
+  right: 16px;
+  top: 17.5px;
+}
+
+.card-content {
+  margin-bottom: 8px;
+}

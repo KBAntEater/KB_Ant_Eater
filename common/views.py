@@ -16,3 +16,30 @@ def signup(request):
     else:
         form = UserForm()
     return render(request, 'common/signup.html', {'form': form})
+
+# def signup(request):
+#     if request.method == 'POST':
+#         if request.POST['password1'] == request.POST['password2']:
+#             user = User.objects.create_user(
+#                 user_id=request.POST['username'],
+#                 user_pwd=request.POST['password1'],
+#                 user_email=request.POST['email'],)
+#             auth.login(request, user)
+#             return redirect('/')
+#         return render(request, 'signup.html')
+#     return render(request, 'signup.html')
+
+# def signup(request):
+#     if request.method =='POST':
+#         user_id = request.POST.get('username')
+#         user_pwd = request.POST.get('password1')
+#         user_email = request.POST.get('email')
+
+#         user = User
+#         user.user_id = user_id
+#         user.user_pwd = user_pwd
+#         user.user_email = user_email
+
+#         user.save()
+#         return render(request, 'signup.html')
+#     return render(request, 'signup.html')
