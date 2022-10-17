@@ -1,6 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
+
+@font-face {
+  font-family: "BMHANNApro";
+  src: url("./BMHANNAPro.ttf") format("truetype");
+}
+
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "BMHANNApro";
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
@@ -32,7 +38,7 @@ body {
 
 h1,
 h2 {
-  font-family: "Dancing Script", cursive;
+  font-family: "BMHANNApro";
 }
 
 .heading_container {
@@ -149,7 +155,7 @@ a:focus {
 }
 
 .navbar-brand {
-  font-family: "Dancing Script", cursive;
+  font-family: "BMHANNApro";
 }
 
 .navbar-brand span {
@@ -439,13 +445,13 @@ a:focus {
 }
 
 .offer_section .box .detail-box h5 {
-  font-family: "Dancing Script", cursive;
+  font-family: "BMHANNApro";
   font-size: 24px;
   margin: 0;
 }
 
 .offer_section .box .detail-box h6 {
-  font-family: "Dancing Script", cursive;
+  font-family: "BMHANNApro";
   margin: 10px 0;
 }
 
@@ -918,7 +924,7 @@ a:focus {
 .footer_section .footer-logo {
   font-weight: 600;
   margin-bottom: 20px;
-  font-family: "Dancing Script", cursive;
+  font-family: "BMHANNApro";
 }
 
 .footer_section p {
@@ -1009,3 +1015,11 @@ a:focus {
   color: inherit;
 }
 /*# sourceMappingURL=style.css.map */
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80%;
+  align-items: center;
+}
