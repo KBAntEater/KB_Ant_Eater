@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+
+
   <div class="container" style='padding-top:50px;'>
-    <h1 style='margin-bottom: 20px;'>2022.10.14 (금)</h1>
+    <h1 id = 'current_date' style='margin-bottom: 20px;'></h1>
+      <script>
+        date = new Date();
+        var week = new Array('일', '월', '화', '수', '목', '금', '토');
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+        week_day = week[date.getDay()];
+        document.getElementById("current_date").innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일';
+      </script>
     <div class='row'>
       {% for news in news_list %}
         <div class="col">
@@ -12,10 +23,13 @@
                   {{ news.news_title }}
                 </p>
                 <p class='card-text' style='font-size : 12px;'>
-                  {{ news.news_src }}, {{ news.news_rep }}기자
+                  {{ news.news_src }}, {{ news.news_rep }} 기자
                 </p>
               </div>
-              <button type="button" class="btn btn-primary btn-detail", link='{{news.news_url}}'>자세히 보기</button>
+              <!-- <a href = '{% url news.news_url %'}  > {{news.news_url}} </button> -->
+              <a href = "{{news.news_url}}">
+                <input type="button" value='자세히 보기' class="btn btn-primary btn-detail">
+              </a>
             </div>
             <div class="card-body">
               <p class='card-content'>{{ news.news_sum_1 }}</p>
