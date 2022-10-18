@@ -1,4 +1,109 @@
 {% extends 'base.html' %}
+
+{% block scripts %}
+  <script>
+    $(function () {
+      var ctx = document
+        .getElementById('myChart')
+        .getContext('2d');
+
+      // data
+      const data = {
+        labels: [
+          "생활/마트", "외식", "카페/간식", "교통", "그 외"
+        ],
+
+        datasets: [
+          {
+            // label: 'My First Dataset',
+            data: [
+              300, 100, 50, 20, 10
+            ],
+            // 생활/마트 116	82	219
+            // 외식 83	132	239
+            // 카페/간식 88	192	171
+            // 교통 79	174	205
+            // 그 외 127	132	140
+            backgroundColor: [
+              'rgb(116,	82,	219)', 'rgb(83,	132,	239)', 'rgb(88,	192,	171)', 'rgb(79,	174,	205)', 'rgb(127,	132,	140)'
+            ],
+            hoverOffset: 4
+          }
+        ]
+      };
+
+      // options
+      const options = {
+        responsive: false,
+        legend: {
+          display: true,
+          position: "left",
+          labels: {
+            boxWidth: 16,
+            padding: 20,
+            usePointStyle: true,
+            pointStyle: "circle",
+            font: {
+              size: 20
+            }
+          }
+        }
+      }
+
+      // config
+      const config = {
+        type: 'doughnut',
+        data: data,
+        options: options
+      }
+
+      // chart
+      var chart = new Chart(ctx, config);
+    });
+  </script>
+{% endblock scripts %}
 {% block content %}
-  <h1>주식 추천</h1>
+  <div class="chart-container" style="display: flex;
+  align-items: center;
+  height: calc(100% - 100px);
+  padding: 0px 110px;
+  ">
+    <canvas id="myChart" width="700"></canvas>
+
+    <table class="table caption-top">
+      <caption>여행/숙박</caption>
+      <thead>
+        <tr>
+          <th scope="col">STOCK NAME</th>
+          <th scope="col">MARKET CAP</th>
+          <th scope="col">VOULME</th>
+          <th scope="col">SUPPLY</th>
+          <th scope="col">TRADE ACTIVITIES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+          <td>Otto</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
