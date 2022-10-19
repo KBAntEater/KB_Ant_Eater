@@ -1,34 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>내 주식</h1>
+  <h1>{{ user.username }} 님의 주식</h1>
+
   <div class='user_option'>
     <!-- 로그인 -->
     {% if user.is_authenticated %}
-      <!-- <p>{{ strSql }}</p> -->
-      <!-- <form action="{% url 'result' %}" method='GET'>
-        <input type='search' name='query'>{{ user.username }}
-        <input type='submit' value='검색'>
-      </form>
-      <div class="container" style='padding-top:50px;'>
-        <div class='row'>
-          {% for s in my_stock %}
-            <div class="col">
-              <div class="card border-dark mb-3" style="width:550px;">
-                <div class="card-header bg-transparent">
-                  <div>
-                    <p class='card-text' style='width: 430px;'>
-                      {{ s.user_id }}
-                    </p>
-                    <p class='card-text' style='font-size : 12px;'>
-                      {{ s.s_ticker }}
-                    </p>
-                  </div>              
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      </div> -->
+      <div class= container>
+        <!-- tables -->
+        <hr>
+        <table class="table">
+          <thead>
+            <button class= "btn btn-outline-primary" onclick="location.href='/stock/my_stock_search' "> 주식 추가하기 </button>
+            <tr>
+                <!-- <th scope="col">#</th> -->
+                <th scope="col">Ticker</th>
+                <th scope="col">Name</th>
+                <th scope="col">Section</th>
+             </tr>
+          </thead>
+          <tbody>
+            {% for i in info %}
+              <tr>
+                <!-- <th scope="row">{{ i }}</th> -->
+                <td>{{ i.s_ticker }}</td>
+                <td>{{ i.s_name }}</td>
+                <td>{{ i.s_kospi_section }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+       </table>
+
 
     <!-- 로그아웃 -->
     {% else %}
