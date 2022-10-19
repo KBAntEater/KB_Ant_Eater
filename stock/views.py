@@ -9,3 +9,8 @@ def stock_recommend(request):
 
 def my_stock(request):
     return render(request, 'stock/my_stock.html')
+
+
+    
+def my_stock_search(request):
+    return render(request, 'stock/my_stock_search.html')
