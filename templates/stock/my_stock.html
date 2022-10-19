@@ -1,4 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
   <h1>내 주식</h1>
+  <div class='user_option'>
+    <!-- 로그인 -->
+    {% if user.is_authenticated %}
+      <!-- <p>{{ strSql }}</p> -->
+      <!-- <form action="{% url 'result' %}" method='GET'>
+        <input type='search' name='query'>{{ user.username }}
+        <input type='submit' value='검색'>
+      </form>
+      <div class="container" style='padding-top:50px;'>
+        <div class='row'>
+          {% for s in my_stock %}
+            <div class="col">
+              <div class="card border-dark mb-3" style="width:550px;">
+                <div class="card-header bg-transparent">
+                  <div>
+                    <p class='card-text' style='width: 430px;'>
+                      {{ s.user_id }}
+                    </p>
+                    <p class='card-text' style='font-size : 12px;'>
+                      {{ s.s_ticker }}
+                    </p>
+                  </div>              
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div> -->
+
+    <!-- 로그아웃 -->
+    {% else %}
+      <script>
+      location.href="{% url 'common:login' %}";
+      </script>
+    {% endif %}
+  </div>
 {% endblock %}
