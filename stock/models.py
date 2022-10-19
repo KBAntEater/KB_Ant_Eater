@@ -1,5 +1,5 @@
 from django.db import models
-
+from common import *
 # Create your models here.
 class Stock(models.Model):
     s_ticker = models.CharField(primary_key=True, max_length=50)

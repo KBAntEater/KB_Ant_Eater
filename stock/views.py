@@ -44,6 +44,10 @@ def my_stock(request):
     ctx = {'strSql': strSql,'info': info}
     return render(request, 'stock/my_stock.html', ctx)
 
+
+def my_stock_search(request):
+    return render(request, 'stock/my_stock_search.html')
+
 # # stock_price 실시간
 # import urllib.request, re
 
