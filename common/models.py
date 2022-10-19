@@ -80,7 +80,7 @@ class AuthUserUserPermissions(models.Model):
 
 class Dividend(models.Model):
     s_ticker = models.CharField(max_length=50)
-    dividend_yiedld = models.FloatField()
+    dividend_yield = models.IntegerField()
 
     class Meta:
         managed = False
@@ -132,29 +132,16 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-class Mystock(models.Model):
-    s_ticker = models.ForeignKey('Stock', models.DO_NOTHING, db_column='s_ticker')
-    user = models.ForeignKey('User', models.DO_NOTHING)
+# class Mystock(models.Model):
+#     s_ticker = models.ForeignKey('Stock', models.DO_NOTHING, db_column='s_ticker')
+#     id = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id')
 
-    class Meta:
-        managed = False
-        db_table = 'mystock'
-
-
-class News(models.Model):
-    news_url = models.CharField(primary_key=True, max_length=255)
-    news_date = models.DateField()
-    news_title = models.CharField(max_length=255)
-    news_sum = models.CharField(max_length=255)
-    news_src = models.CharField(max_length=255)
-
-    class Meta:
-        managed = False
-        db_table = 'news'
-
+#     class Meta:
+#         managed = False
+#         db_table = 'mystock'
 
 class Realtimestock(models.Model):
-    s_ticker = models.CharField(max_length=50)
+    s_ticker = models.ForeignKey('Stock', models.DO_NOTHING, db_column='s_ticker')
     s_time = models.DateField()
     s_now_price = models.IntegerField()
     s_market_cap = models.IntegerField()
@@ -168,8 +155,6 @@ class Stock(models.Model):
     s_ticker = models.CharField(primary_key=True, max_length=50)
     s_name = models.CharField(max_length=50)
     s_kospi_section = models.CharField(max_length=50)
-    s_wics_section = models.CharField(max_length=50)
-    dividend_yield = models.FloatField()
 
     class Meta:
         managed = False
@@ -204,6 +189,15 @@ class StockHistory(models.Model):
     class Meta:
         managed = False
         db_table = 'stock_history'
+
+
+class Theme(models.Model):
+    s_theme = models.CharField(max_length=50, blank=True, null=True)
+    s_name = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'theme'
 
 
 class User(models.Model):

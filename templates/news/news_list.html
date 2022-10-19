@@ -1,133 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
+
+
   <div class="container" style='padding-top:50px;'>
-    <h1 style='margin-bottom: 20px;'>2022.10.14 (금)</h1>
+    <h1 id = 'current_date' style='margin-bottom: 20px;'></h1>
+      <script>
+        date = new Date();
+        var week = new Array('일', '월', '화', '수', '목', '금', '토');
+        year = date.getFullYear();
+        month = date.getMonth() + 1;
+        day = date.getDate();
+        week_day = week[date.getDay()];
+        document.getElementById("current_date").innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일';
+      </script>
     <div class='row'>
-      <div class="col">
-        <div class="card border-dark mb-3" style="width:550px;">
-          <div class="card-header bg-transparent">
-            <div>
-              <p class='card-text' style='width: 430px;'>
-                제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목
-              </p>
-              <p class='card-text' style='font-size : 12px;'>
-                글, 박하린
-              </p>
+      {% for news in news_list %}
+        <div class="col">
+          <div class="card border-dark mb-3" style="width:550px;">
+            <div class="card-header bg-transparent">
+              <div>
+                <p class='card-text' style='width: 430px;'>
+                  {{ news.news_title }}
+                </p>
+                <p class='card-text' style='font-size : 12px;'>
+                  {{ news.news_src }}, {{ news.news_rep }} 기자, {{news.news_date}}
+                </p>
+              </div>
+              <!-- <a href = '{% url news.news_url %'}  > {{news.news_url}} </button> -->
+              <a href = "{{news.news_url}}">
+                <input type="button" value='자세히 보기' class="btn btn-primary btn-detail">
+              </a>
             </div>
-            <button type="button" class="btn btn-primary btn-detail">자세히 보기</button>
-          </div>
-          <div class="card-body">
-            <p class='card-content'>Some quick example text to build on the card title and make up the bulk of the card's content.ome quick example text to build on the card title and make up the bulk of the card's content.ome quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p class='card-content'>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div class="card-body">
+              <p class='card-content'>{{ news.news_sum_1 }}</p>
+              <p class='card-content'>{{ news.news_sum_2 }}</p>
+              <p class='card-content'>{{ news.news_sum_3 }}</p>
+            </div>
           </div>
         </div>
-      </div>
-      {% comment %} 2 {% endcomment %}
-      <div class="col">
-        <div class="card border-dark mb-3" style="width:550px; height : 300px;">
-          <div class="card-header bg-transparent">
-            <div>
-              <p class='card-text'>
-                제목
-              </p>
-              <p class='card-text' style='font-size : 12px;'>
-                글, 박하린
-              </p>
-            </div>
-            <button type="button" class="btn btn-primary btn-detail">자세히 보기</button>
-          </div>
-          <div class="card-body">
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-      {% comment %} 3 {% endcomment %}
-      <div class="col">
-        <div class="card border-dark mb-3" style="width:550px; height : 300px;">
-          <div class="card-header bg-transparent">
-            <div>
-              <p class='card-text'>
-                제목
-              </p>
-              <p class='card-text' style='font-size : 12px;'>
-                글, 박하린
-              </p>
-            </div>
-            <button type="button" class="btn btn-primary btn-detail">자세히 보기</button>
-          </div>
-          <div class="card-body">
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-      {% comment %} 4 {% endcomment %}
-      <div class="col">
-        <div class="card border-dark mb-3" style="width:550px; height : 300px;">
-          <div class="card-header bg-transparent">
-            <div>
-              <p class='card-text'>
-                제목
-              </p>
-              <p class='card-text' style='font-size : 12px;'>
-                글, 박하린
-              </p>
-            </div>
-            <button type="button" class="btn btn-primary btn-detail">자세히 보기</button>
-          </div>
-          <div class="card-body">
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-      {% comment %} 5 {% endcomment %}
-      <div class="col">
-        <div class="card border-dark mb-3" style="width:550px; height : 300px;">
-          <div class="card-header bg-transparent">
-            <div>
-              <p class='card-text'>
-                제목
-              </p>
-              <p class='card-text' style='font-size : 12px;'>
-                글, 박하린
-              </p>
-            </div>
-            <button type="button" class="btn btn-primary btn-detail">자세히 보기</button>
-          </div>
-          <div class="card-body">
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
-      {% comment %} 6 {% endcomment %}
-      <div class="col">
-        <div class="card border-dark mb-3" style="width:550px; height : 300px;">
-          <div class="card-header bg-transparent">
-            <div>
-              <p class='card-text'>
-                제목
-              </p>
-              <p class='card-text' style='font-size : 12px;'>
-                글, 박하린
-              </p>
-            </div>
-            <button type="button" class="btn btn-primary btn-detail">자세히 보기</button>
-          </div>
-          <div class="card-body">
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <p>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          </div>
-        </div>
-      </div>
+      {% endfor %}   
     </div>
   </div>
 {% endblock %}
