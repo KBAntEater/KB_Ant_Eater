@@ -34,3 +34,17 @@ class Mystock(models.Model):
     class Meta:
         managed = False
         db_table = 'mystock'
+
+class StockDb(models.Model):
+    s_ticker = models.CharField(max_length=50)
+    s_name = models.CharField(max_length=255)
+    s_date = models.DateField()
+    open = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    close = models.IntegerField()
+    s_volume = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'stock_db'
