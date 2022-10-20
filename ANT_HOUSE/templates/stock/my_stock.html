@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>{{ user.username }}
+    님의 주식</h1>
+
+  <!-- <div class='user_option'> -->
+  <!-- 로그인 -->
+  {% if user.is_authenticated %}
+    <div class="container">
+      <!-- tables -->
+      <table class="table">
+        <thead>
+          <div class="input-group" style="width : 40%;">
+            <input type="word" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
+            <button type="button" class="btn btn-outline-primary">검색</button>
+          </div>
+          <tr>
+            <!-- <th scope="col">#</th> -->
+            <!-- <th scope="col">Ticker</th> -->
+            <th scope="col">종목명</th>
+            <th scope="col">시가</th>
+            <th scope="col">고가</th>
+            <th scope="col">저가</th>
+            <th scope="col">업종</th>
+            <th scope="col">판매량</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for i in info %}
+            <tr>
+              <!-- <th scope="row">{{ i }}</th> -->
+              <td>{{ i.s_name }}</td>
+              <td>{{ i.open }}</td>
+              <td>{{ i.high }}</td>
+              <td>{{ i.low }}</td>
+              <td>{{ i.s_kospi_section }}</td>
+              <td>{{ i.s_volume }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!-- 로그아웃 -->
+    {% else %}
+      <script>
+        location.href = "{% url 'common:login' %}";
+      </script>
+    {% endif %}
+    <!-- </div> -->
+  {% endblock %}
