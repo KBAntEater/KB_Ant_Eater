@@ -49,12 +49,15 @@ def my_stock(request):
         connection.rollback()
         print("Failed selecting in BookListView")
 
-    ctx = {'strSql': strSql,'info': info}
+    stock = Stock.objects.all()
+    ctx = {'strSql': strSql,'info': info, 'stock': stock}
     return render(request, 'stock/my_stock.html', ctx)
 
 
-def my_stock_search(request):
-    return render(request, 'stock/my_stock_search.html')
+# def search(request):
+#     stock = Stock.objects.all()
+#     ctx = {'stock': stock}
+#     return render(request, 'stock/my_stock.html', ctx)
 
 from django.http import JsonResponse
 def get(request):

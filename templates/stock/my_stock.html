@@ -6,13 +6,53 @@
     <!-- 로그인 -->
     {% if user.is_authenticated %}
       <div class= container>
-        <!-- tables -->
+        
+        <h1>AutoComplete</h1>
+          <!-- <script src= "https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">  
+          </script>  
+          <script src= "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">  
+          </script>  
+          <link href= "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />  
+         -->
+          <!-- <div class="input-group" style="width : 40%;">
+            <input type="word" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
+            <button type="button" class="btn btn-outline-primary">검색</button>
+          </div> -->
+        
+        <body>
+            
+            <!-- 검색창 -->
+            <div class="case" style="width : 40%;">
+                <div class="input_wrap">
+                    <input type="text" class="search_input" placeholder="검색어를 입력하세요.">
+                    <button type="button" class="btn btn-outline-primary case_search_btn" id="search_btn">검색</button>
+                </div>  
+                <div class="suggestions suggestions_pannel">
+                </div>
+            </div>
+        
+            <!--js파일 호출 index.js -->
+            <script type="text/javascript" src="/static/search.js"></script>
+        
+        </body>
+        
+        </html>
+        
+          
+          <!-- <script>
+            $( function() {
+              var n_list = []
+              for (var n=1; n<stock.length; n++){
+                  n_list.append(s.s_name)
+                }
+              $( "#tags" ).autocomplete({ source: n_list});
+              } 
+            );
+          </script> -->
+
+          <!-- tables -->
         <table class="table">
           <thead>
-            <div class="input-group" style="width : 40%;">
-              <input type="word" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
-              <button type="button" class="btn btn-outline-primary">검색</button>
-            </div>
             <tr>
                 <!-- <th scope="col">#</th> -->
                 <!-- <th scope="col">Ticker</th> -->
