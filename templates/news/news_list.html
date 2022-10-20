@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-
-  <div class="container" style='padding-top:50px;'>
-    <h1 id = 'current_date' style='margin-bottom: 20px;'></h1>
+<h1 id = 'current_date' style='margin-bottom: 20px;'></h1>
       <script>
         date = new Date();
         var week = new Array('일', '월', '화', '수', '목', '금', '토');
@@ -13,16 +11,17 @@
         week_day = week[date.getDay()];
         document.getElementById("current_date").innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일';
       </script>
-    <div class='row'>
+  <div class="container" style='padding-top:50px; display: flex; flex-direction: column; align-items: center;'>
+    
       {% for news in news_list %}
         <div class="col">
-          <div class="card border-dark mb-3" style="width:550px;">
+          <div class="card border-dark mb-3"  style="width:1100px;">
             <div class="card-header bg-transparent">
               <div>
-                <p class='card-text' style='width: 430px;'>
+                <p class='card-text' style='font-size: 35px;'>
                   {{ news.news_title }}
                 </p>
-                <p class='card-text' style='font-size : 12px;'>
+                <p class='card-text' style='font-size : 15px;'>
                   {{ news.news_src }}, {{ news.news_rep }} 기자, {{news.news_date}}
                 </p>
               </div>
@@ -31,7 +30,7 @@
                 <input type="button" value='자세히 보기' class="btn btn-primary btn-detail">
               </a>
             </div>
-            <div class="card-body">
+            <div class="card-body" style='line-height: 30px;'>
               <p class='card-content'>{{ news.news_sum_1 }}</p>
               <p class='card-content'>{{ news.news_sum_2 }}</p>
               <p class='card-content'>{{ news.news_sum_3 }}</p>
@@ -39,6 +38,5 @@
           </div>
         </div>
       {% endfor %}   
-    </div>
   </div>
 {% endblock %}
