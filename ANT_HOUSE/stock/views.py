@@ -15,25 +15,28 @@ def my_stock(request):
 
     # 주식 추가
     if request.method == "POST":# and request.action=="add":#파라미터추출, 데이터저장
-        s_name = request.POST['s_name']
-        print('s_name = '+ s_name)
-        cursor = connection.cursor()
+        
+        s_name = request.POST.get('s_name',"")
+        
+        # 추가
+        if s_name :
+            cursor = connection.cursor()
 
-        strSql = f"SELECT id FROM auth_user WHERE username = '{request.user.username}'"
-        result = cursor.execute(strSql)
-        user_id = cursor.fetchone()[0]
+            strSql = f"SELECT id FROM auth_user WHERE username = '{request.user.username}'"
+            result = cursor.execute(strSql)
+            user_id = cursor.fetchone()[0]
 
-        strSql = f"SELECT s_ticker FROM stock WHERE s_name = '{s_name}'"
-        result = cursor.execute(strSql)
-        s_ticker = cursor.fetchone()[0]
+            strSql = f"SELECT s_ticker FROM stock WHERE s_name = '{s_name}'"
+            result = cursor.execute(strSql)
+            s_ticker = cursor.fetchone()[0]
 
-        # 4 = annie / lhj991202
-        # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
-        strSql = f"INSERT INTO mystock (user_id, s_ticker) VALUES ({user_id}, '{s_ticker}')"
-        result = cursor.execute(strSql)
+            # 4 = annie / lhj991202
+            # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
+            strSql = f"INSERT INTO mystock (user_id, s_ticker) VALUES ({user_id}, '{s_ticker}')"
+            result = cursor.execute(strSql)
 
-        connection.commit()
-        connection.close()
+            connection.commit()
+            connection.close()
 
     # 내 주식 테이블 로드
     global info
@@ -73,21 +76,19 @@ def my_stock(request):
         connection.rollback()
         print("error")
 
-    # # 삭제
-    # if request.method == "POST" and request.action=="delete":#파라미터추출, 데이터저장
-    #     delete = request.POST['delete']
-    #     print('\n\ndelete\n\n = ', delete)
-    #     cursor = connection.cursor()
-
-    #     strSql = f"""DELETE FROM mystock 
-    #                 JOIN stock ON mystock.s_ticker = stock.s_ticker
-    #                 WHERE user_id = '{request.user.username}' 
-    #                 AND stock.s_name = '{delete}';"""
-    #     result = cursor.execute(strSql)
-        
-    #     connection.commit()
-    #     connection.close()
-
     stock = Stock.objects.all()
     ctx = {'strSql': strSql,'info': info, 'stock': stock}
     return render(request, 'stock/my_stock.html', ctx)
+
+def delete(request):
+    delete = request.POST.get("s_name")
+    print('\n\ndelete\n\n = ', delete)
+    cursor = connection.cursor()
+
+    strSql = f"""DELETE mystock FROM mystock JOIN stock ON mystock.s_ticker = stock.s_ticker WHERE (user_id = '{request.user.username}') AND (stock.s_name = '{delete}');"""
+    result = cursor.execute(strSql)
+    
+    connection.commit()
+    connection.close()
+    return render(request, 'stock/my_stock.html')
+    
