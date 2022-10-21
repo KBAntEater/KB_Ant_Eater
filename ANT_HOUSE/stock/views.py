@@ -1,15 +1,45 @@
 from django.shortcuts import render, redirect
 from .models import *
 
+from django.db import connection
+from django.contrib.auth.models import User
+
 # Create your views here.
 def index(request):
     return render(request, 'stock/live_stock_treemap.html')
 
 def stock_recommend(request):
-    return render(request, 'stock/stock_recommend.html')
+    global theme
+    theme = []
+    try:
+        cursor = connection.cursor()
 
-from django.db import connection
-from django.contrib.auth.models import User
+        strSql = f"""SELECT DISTINCT s.s_name, t.c_type, d.dividend_yield FROM theme AS t 
+                    JOIN stock AS s ON s.s_name = t.s_name
+                    JOIN dividend AS d ON d.s_ticker = s.s_ticker
+                    WHERE c_type = '생활'
+                    ORDER BY d.dividend_yield DESC;"""
+        result = cursor.execute(strSql)
+        datas = cursor.fetchall()
+
+        connection.commit()
+        connection.close()
+
+        for i in range(0,8):
+            row = {
+                's_name': datas[i][0],
+                'c_type' : datas[i][1],
+                'dividend_yield'  : datas[i][2],
+            }
+            theme.append(row)
+
+    except:
+        connection.rollback()
+        print("Failed")
+
+    ctx = {'strSql': strSql, 'theme' :theme}
+    return render(request, 'stock/stock_recommend.html', ctx)
+
 
 def my_stock(request):
 
@@ -87,6 +117,19 @@ def my_stock(request):
         
     #     connection.commit()
     #     connection.close()
+# # stock_price 실시간
+# import urllib.request, re
+
+# def fetch(daumticker):
+#     #print("daumticker",daumticker)
+#     url="http://finance.daum.net/item/main.daum?code="
+#     txt=urllib.request.urlopen(url+daumticker).read().decode()
+#     k=re.search('class="curPrice(.*?)">(.*?)<',txt)
+#     if k:
+#         price=k.group(60)
+#     else:
+#         price = "Nothing found for: " + daumticker + " price"
+#     return price
 
     stock = Stock.objects.all()
     ctx = {'strSql': strSql,'info': info, 'stock': stock}
