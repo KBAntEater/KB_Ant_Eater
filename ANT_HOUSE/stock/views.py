@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 
 # Create your views here.
@@ -12,6 +12,30 @@ from django.db import connection
 from django.contrib.auth.models import User
 
 def my_stock(request):
+
+    # 주식 추가
+    if request.method == "POST":# and request.action=="add":#파라미터추출, 데이터저장
+        s_name = request.POST['s_name']
+        print('s_name = '+ s_name)
+        cursor = connection.cursor()
+
+        strSql = f"SELECT id FROM auth_user WHERE username = '{request.user.username}'"
+        result = cursor.execute(strSql)
+        user_id = cursor.fetchone()[0]
+
+        strSql = f"SELECT s_ticker FROM stock WHERE s_name = '{s_name}'"
+        result = cursor.execute(strSql)
+        s_ticker = cursor.fetchone()[0]
+
+        # 4 = annie / lhj991202
+        # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
+        strSql = f"INSERT INTO mystock (user_id, s_ticker) VALUES ({user_id}, '{s_ticker}')"
+        result = cursor.execute(strSql)
+
+        connection.commit()
+        connection.close()
+
+    # 내 주식 테이블 로드
     global info
     info = []
     try:
@@ -47,53 +71,23 @@ def my_stock(request):
 
     except:
         connection.rollback()
-        print("Failed selecting in BookListView")
+        print("error")
+
+    # # 삭제
+    # if request.method == "POST" and request.action=="delete":#파라미터추출, 데이터저장
+    #     delete = request.POST['delete']
+    #     print('\n\ndelete\n\n = ', delete)
+    #     cursor = connection.cursor()
+
+    #     strSql = f"""DELETE FROM mystock 
+    #                 JOIN stock ON mystock.s_ticker = stock.s_ticker
+    #                 WHERE user_id = '{request.user.username}' 
+    #                 AND stock.s_name = '{delete}';"""
+    #     result = cursor.execute(strSql)
+        
+    #     connection.commit()
+    #     connection.close()
 
     stock = Stock.objects.all()
     ctx = {'strSql': strSql,'info': info, 'stock': stock}
     return render(request, 'stock/my_stock.html', ctx)
-
-
-# def search(request):
-#     stock = Stock.objects.all()
-#     ctx = {'stock': stock}
-#     return render(request, 'stock/my_stock.html', ctx)
-
-from django.http import JsonResponse
-def get(request):
-    try:
-        word = request.GET.get('word', '')
-        results=[]
-
-        s_name = StockDb.objects.filter(s_name__icontains = word).exists()
-        
-        if s_name:
-            stocks = StockDb.objects.filter(s_name__icontains = word)
-            for stock in stocks:
-                results.append({
-                    'word' : StockDb.s_name
-                })
-        
-        return JsonResponse({'results': results}, status=201)
-    
-    except Exception as error:
-        return JsonResponse({'message': error}, status=400)
-
-# # stock_price 실시간
-# import urllib.request, re
-
-# def fetch(daumticker):
-#     #print("daumticker",daumticker)
-#     url="http://finance.daum.net/item/main.daum?code="
-#     txt=urllib.request.urlopen(url+daumticker).read().decode()
-#     k=re.search('class="curPrice(.*?)">(.*?)<',txt)
-#     if k:
-#         price=k.group(60)
-#     else:
-#         price = "Nothing found for: " + daumticker + " price"
-#     return price
-
-# def combine(ticker):
-#     price = fetch(ticker)   
-#     output=[ticker, price]
-#     return output
