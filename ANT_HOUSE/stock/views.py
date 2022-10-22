@@ -102,7 +102,7 @@ def delete(request):
     connection.commit()
     connection.close()
 
-    return render(request, 'stock/delete.html')
+    return render(request, 'stock/my_stock.html')
 
 def No(request):
     return render(request, 'stock/delete.html')
