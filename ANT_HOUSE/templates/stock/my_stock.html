@@ -958,13 +958,20 @@
             $( "#tags" ).autocomplete({
               source: availableTags
             });
+          
+          $("#in_f").submit(function(){
+            if ($("#tags").val()=="")
+              return false
+          })
+          
+          
           } );
         </script>
         
         <body>
             
             <!-- 검색창 -->
-          <form action="" method="POST">
+          <form action="" method="POST" id="in_f">
             {% csrf_token %}
             <div class="case" style="width : 40%;">
                 <div class="input_wrap">
@@ -991,7 +998,7 @@
                 <th scope="col">저가</th>
                 <th scope="col">업종</th>
                 <th scope="col">판매량</th>
-                <!-- <th scope="col">삭제</th> -->
+                <th scope="col">삭제</th>
 
              </tr>
           </thead>
@@ -1006,12 +1013,14 @@
                 <td>{{ i.low }}</td>
                 <td>{{ i.s_kospi_section }}</td>
                 <td>{{ i.s_volume }}</td>
-                <!-- <td>
-                  <form action="delet" method="POST">
+                <td>
+                  <form action="delete" method="POST">
                     {% csrf_token %}
-                    <button type="submit" id= '{{ i.s_name }}' lass="btn btn-outline-primary case_search_btn" >X</button>
+                    <button type="submit"  class="btn btn-outline-primary">X</button>
+                    <input type="hidden" name = 's_name' value="{{ i.s_name }}">
+                    <!-- <input type="submit" label='X' name = {{i.s_name}} class="btn btn-outline-primary case_search_btn" ></button> -->
                   </form>
-                </td> -->
+                </td>
               </tr>
             {% endfor %}
           </tbody>
