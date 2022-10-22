@@ -82,13 +82,27 @@ def my_stock(request):
 
 def delete(request):
     delete = request.POST.get("s_name")
-    print('\n\ndelete\n\n = ', delete)
     cursor = connection.cursor()
 
-    strSql = f"""DELETE mystock FROM mystock JOIN stock ON mystock.s_ticker = stock.s_ticker WHERE (user_id = '{request.user.username}') AND (stock.s_name = '{delete}');"""
+    strSql = f"SELECT id FROM auth_user WHERE username = '{request.user.username}'"
     result = cursor.execute(strSql)
-    
+    user_id = cursor.fetchone()[0]
+
+    strSql = f"SELECT s_ticker FROM stock WHERE s_name = '{delete}'"
+    result = cursor.execute(strSql)
+    s_ticker = cursor.fetchone()[0]
+
+    print(f"DELETE FROM mystock WHERE user_id = {user_id} AND s_ticker = '{s_ticker}';")
+
+    # 4 = annie / lhj991202
+    # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
+    strSql = f"DELETE FROM mystock WHERE user_id = {user_id} AND s_ticker = '{s_ticker}';"
+    result = cursor.execute(strSql)
+
     connection.commit()
     connection.close()
-    return render(request, 'stock/my_stock.html')
-    
+
+    return render(request, 'stock/delete.html')
+
+def No(request):
+    return render(request, 'stock/delete.html')
