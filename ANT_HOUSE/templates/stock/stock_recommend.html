@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block scripts %}
+  <script>
+    window.onload = function () {
+      pieChartDraw();
+
+      document
+        .getElementById('legend-div')
+        .innerHTML = window
+        .chart
+        .generateLegend();
+
+      setLegendOnClick();
+    }
+
+    const data = {
+      labels: [
+        "생활/마트", "외식", "카페/간식", "교통", "그 외"
+      ],
+
+      datasets: [
+        {
+          // label: 'My First Dataset',
+          data: [
+            300, 100, 50, 20, 10
+          ],
+          // 생활/마트 116	82	219 
+          // 외식 83	132	239
+          // 카페/간식 88	192	171
+          // 교통 79	174	205
+          // 그 외 127	132	140
+          backgroundColor: [
+            'rgb(116,	82,	219)', 'rgb(83,	132,	239)', 'rgb(88,	192,	171)', 'rgb(79,	174,	205)', 'rgb(127,	132,	140)'
+          ],
+          hoverOffset: 4
+        }
+      ]
+    };
+
+    const pieChartDraw = () => {
+      let ctx = document
+        .getElementById('myChart')
+        .getContext('2d');
+
+      // chart
+      // var chart = new Chart(ctx, config);
+      window.chart = new Chart(ctx, config);
+    }
+
+    // customLegend
+    let customLegend = function (chart) {
+      let ul = document.createElement('ul');
+      let color = data
+        .datasets[0]
+        .backgroundColor;
+
+      let consumData = data
+        .datasets[0]
+        .data
+
+        chart
+        .data
+        .labels
+        .forEach(function (label, index) {
+          ul.innerHTML += `<form><div style="cursor:pointer;"><li><span style="background-color: ${color[index]};"></span> ${label}</li>
+          <li>${consumData[index]} 원</li></div></form>
+          `;
+        });
+
+      return ul.outerHTML;
+    };
+
+    let setLegendOnClick = function () {
+      let liList = document.querySelectorAll('#legend-div ul li');
+      let caption = document.querySelectorAll('.table caption')
+      console.log(caption)
+      for (let element of liList) {
+          element.onclick = function () {
+            let target = event.target.innerText
+            console.log(target)
+            caption[0].innerText = target      
+          }
+      }
+  };
+  
+
+    const options = {
+      responsive: false,
+      legend: {
+        display: false
+      },
+      legendCallback: customLegend
+    }
+
+    // config
+    const config = {
+      type: 'doughnut',
+      data: data,
+      options: options
+    }
+  </script>
+{% endblock scripts %}
+{% block content %}
+  <p>소비 습관을 기반으로 한 종목 추천을 받아보세요!</p>
+  <div class="chart-container">
+    <div class="legend-container">
+      <canvas id="myChart" width="700"></canvas>
+      <div id='legend-div'></div>
+    </div>
+    <table class="table caption-top">
+      <caption style="margin-bottom : 15px; font-size : 20px;">생활/마트</caption>
+      <thead>
+        <tr>
+          <th scope="col">종목명</th>
+          <th scope="col">현재가</th>
+          <th scope="col">주당배당금</th>
+          <th scope="col">소비 돌려받기</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">5</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+        <tr>
+          <th scope="row">6</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
+
+{% comment %} 현재가, 주당배당금, 소비 돌려받기 {% endcomment %}

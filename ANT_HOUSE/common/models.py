@@ -39,7 +39,6 @@ class AuthPermission(models.Model):
 
 
 class AuthUser(models.Model):
-    id = models.IntegerField(primary_key=True)
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
     is_superuser = models.IntegerField()
@@ -58,24 +57,24 @@ class AuthUser(models.Model):
 
 class AuthUserGroups(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    user_id = models.IntegerField()
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'auth_user_groups'
-        unique_together = (('user', 'group'),)
+        unique_together = (('user_id', 'group'),)
 
 
 class AuthUserUserPermissions(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    user_id = models.IntegerField()
     permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'auth_user_user_permissions'
-        unique_together = (('user', 'permission'),)
+        unique_together = (('user_id', 'permission'),)
 
 
 class Dividend(models.Model):
@@ -88,13 +87,14 @@ class Dividend(models.Model):
 
 
 class DjangoAdminLog(models.Model):
+    id = models.OneToOneField(AuthUser, models.DO_NOTHING, db_column='id', primary_key=True)
     action_time = models.DateTimeField()
     object_id = models.TextField(blank=True, null=True)
     object_repr = models.CharField(max_length=200)
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
     content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    user_id = models.IntegerField()
 
     class Meta:
         managed = False
@@ -132,13 +132,30 @@ class DjangoSession(models.Model):
         db_table = 'django_session'
 
 
-# class Mystock(models.Model):
-#     s_ticker = models.ForeignKey('Stock', models.DO_NOTHING, db_column='s_ticker')
-#     id = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='id')
+class Mystock(models.Model):
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    s_ticker = models.ForeignKey('Stock', models.DO_NOTHING, db_column='s_ticker')
 
-#     class Meta:
-#         managed = False
-#         db_table = 'mystock'
+    class Meta:
+        managed = False
+        db_table = 'mystock'
+
+
+class News(models.Model):
+    news_id = models.AutoField(primary_key=True)
+    news_date = models.DateField()
+    news_title = models.CharField(max_length=255)
+    news_sum_1 = models.CharField(max_length=255)
+    news_sum_2 = models.CharField(max_length=255)
+    news_sum_3 = models.CharField(max_length=255)
+    news_src = models.CharField(max_length=255)
+    news_rep = models.CharField(max_length=255)
+    news_url = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'news'
+
 
 class Realtimestock(models.Model):
     s_ticker = models.ForeignKey('Stock', models.DO_NOTHING, db_column='s_ticker')
@@ -170,7 +187,6 @@ class StockDb(models.Model):
     low = models.IntegerField()
     close = models.IntegerField()
     s_volume = models.IntegerField()
-    s_theme = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
