@@ -1,10 +1,9 @@
-from dataclasses import dataclass
 from django.shortcuts import render, redirect
 from .models import *
 
 # Create your views here.
-def index(request):
-    return render(request, 'stock/live_stock_treemap.html')
+# def index(request):
+#     return render(request, 'stock/live_stock_treemap.html')
 
 def stock_recommend(request):
     return render(request, 'stock/stock_recommend.html')
@@ -64,12 +63,12 @@ def my_stock(request):
             import pykrx, datetime
             from pykrx import stock
             today = datetime.datetime.today().strftime("%Y%m%d")
-            df= stock.get_market_ohlcv(today, today, data[2])
-            open = df['시가'][today]
-            high = df['고가'][today]
-            low = df['저가'][today]
-            s_price = df['종가'][today]
-            s_volume = df['거래량'][today]
+            updown= stock.get_market_ohlcv(today, today, data[2])
+            open = updown['시가'][today]
+            high = updown['고가'][today]
+            low = updown['저가'][today]
+            s_price = updown['종가'][today]
+            s_volume = updown['거래량'][today]
 
             row = {
                 'id': data[0],
@@ -118,3 +117,80 @@ def delete(request):
     connection.close()
 
     return render(request, 'stock/delete.html')
+
+def index(request):
+
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import plotly
+    from plotly import express as px
+    from pykrx import stock
+    import datetime
+    from django.db import connection
+
+
+    today = datetime.datetime.today().strftime("%Y%m%d")
+
+    cursor = connection.cursor()
+    
+    sql = "select * from stock"
+    cursor.execute(sql)
+    stock_info=pd.DataFrame(cursor.fetchall())
+    updown=pd.DataFrame()
+
+    # 코스피 등락률 가져오기 
+    updown=stock.get_market_price_change_by_ticker(today, today)
+    updown['종목코드']=updown.index
+
+    # 코스피 섹터 가져오기 
+    stocks = stock_info.copy()
+    # print(stocks.columns())
+    sector = stocks[[0, 2]].to_numpy() # s_ticker, sector
+
+    # 코스피 사이즈 가져오기 
+    size = stock.get_market_cap(today)
+    
+    # ticker를 안에 넣어주기 
+    size['s_ticker']= size.index
+    size = size[['s_ticker','시가총액']].to_numpy()
+
+
+    # 등락률과 섹터 합치는 함수 
+    def updown_sector(code):
+        for i in range(len(sector)):
+            if code == sector[i][0]:
+                return sector[i][1]
+        return 'No'
+
+    # 등락률과 사이즈 합치는 함수 
+    def updown_size(code):
+        for i in range(len(size)):
+            if code == size[i][0]:
+                return size[i][1]
+        return 'No'
+
+    #합치기 
+    updown['섹터'] = updown['종목코드'].map(updown_sector)
+    updown['시가총액'] = updown['종목코드'].map(updown_size)
+
+    # updown=updown.drop(['시가','종가','변동폭','거래량','거래대금'],axis='columns')
+
+    updown['시장구분']='KOSPI'
+
+    updown.loc[updown['섹터'].isna(),'섹터']='우선주'
+
+
+    # Treemap 그리기
+    fig = px.treemap(updown, path=['시장구분','섹터','종목명'], values='시가총액',
+                    color='등락률',
+                    hover_data=['등락률','종목코드'],
+                    
+                    range_color=(-0.3,0.3),color_continuous_scale='RdBu')
+    fig.update_traces(textposition='middle center',text = updown['등락률'])
+    fig.update_traces(textfont_color='white',textfont_size=25)
+
+    fig.update_layout(height=800)
+    fig.show()
+    ctx = {'updown':updown, 'fig': fig}
+    return render (request, 'stock/treemap.html')
