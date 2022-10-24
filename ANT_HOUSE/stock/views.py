@@ -76,6 +76,22 @@ def my_stock(request):
         connection.rollback()
         print("error")
 
+
+    # 오늘 날짜 크롤링
+
+
+    # 실시간 주식 현재가 크롤링
+    import pykrx, datetime
+    df= stock.get_market_ohlcv(datetime.today().strftime("%Y%m%d"), info[2])
+
+    if df.empty :
+        print("error")
+    else:
+        print(df['종가'])
+
+
+
+
     stock = Stock.objects.all()
     ctx = {'strSql': strSql,'info': info, 'stock': stock}
     return render(request, 'stock/my_stock.html', ctx)
