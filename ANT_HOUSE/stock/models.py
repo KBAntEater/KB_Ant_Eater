@@ -48,3 +48,12 @@ class StockDb(models.Model):
     class Meta:
         managed = False
         db_table = 'stock_db'
+
+class Theme(models.Model):
+    s_theme = models.CharField(max_length=50, blank=True, null=True)
+    s_name = models.CharField(max_length=50, blank=True, null=True)
+    c_type = models.CharField(max_length=50, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'theme'
