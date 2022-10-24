@@ -9,17 +9,7 @@ import plotly.express as px
 
 import pandas as pd
 import numpy as np
-import FinanceDataReader as fdr
 from pykrx import stock
-
-
-
-
-
-
-
-
-
 
 
 # Create your views here.
