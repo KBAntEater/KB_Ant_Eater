@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from django.shortcuts import render, redirect
 from .models import *
 
@@ -77,20 +78,34 @@ def my_stock(request):
 
         connection.commit()
         connection.close()
-        
+
         for data in datas:
+            
+            import pykrx, datetime
+            from pykrx import stock
+            today = datetime.datetime.today().strftime("%Y%m%d")
+            df= stock.get_market_ohlcv(today, today, data[2])
+            open = df['시가'][today]
+            high = df['고가'][today]
+            low = df['저가'][today]
+            s_price = df['종가'][today]
+            s_volume = df['거래량'][today]
+
             row = {
                 'id': data[0],
                 'username' : data[1],
                 's_ticker'  : data[2],
                 's_name' : data[3],
                 's_kospi_section' : data[4],
-                'open' : data[5],
-                'high' : data[6],
-                'low' : data[7],
-                's_volume' : data[8]
+                'open' : open,
+                'high' : high,
+                'low' : low,
+                's_volume' : s_volume,
+                's_price' : s_price
             }
             info.append(row)
+            
+
 
     except:
         connection.rollback()
