@@ -1,14 +1,59 @@
+.recommend-p {
+  font-size: 26px;
+  margin: 40px 0px 60px 0px;
+  text-align: center;
+}
+
 .chart-container {
   display: flex;
   align-items: center;
-  height: calc(100% - 100px);
-  padding: 0px 110px 0px 0px;
+  justify-content: center;
+  /* height: calc(100% - 100px); */
+  margin: 0px 80px 0px 0px;
+}
+
+#consume_pattern {
+  font-size: 20px;
+  color: #6c757d;
+}
+
+.consume-title {
+  font-size: 20px;
+  margin: 0px 0px 20px 0px;
 }
 
 .legend-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.consume {
+  width: 800px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.recommend1 span {
+  font-size: 26px;
+}
+.recommend1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.recommend1-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+  background-size: 200px 200px;
 }
 
 #legend-div {
@@ -19,21 +64,23 @@
   padding: 0;
 }
 
-#legend-div div {
+#legend-div button {
   width: 350px;
   display: flex;
   justify-content: space-between;
   cursor: pointer;
+  border: none;
+  background: none;
 }
 
-#legend-div ul li {
+#legend-div ul button {
   box-sizing: border-box;
-  margin: 10px 0;
+  margin: 15px 0;
   color: #666;
   list-style: none;
 }
 
-#legend-div ul li span {
+#legend-div ul button span {
   display: inline-block;
   width: 20px !important;
   height: 20px !important;
