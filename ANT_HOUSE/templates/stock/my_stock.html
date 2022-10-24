@@ -1,11 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>{{ user.username }} 님의 주식</h1>
+
+<style>
+  div#recommend_content{
+    margin-top: 100px;
+    font-size: 1.5em;
+    margin-bottom: 100px;
+  }
+
+</style>
+ <div id='recommend_content' style="text-align:center; " ><p> <b>{{ user.username }} 님의 주식</b></p></div> 
+
 
   <!-- <div class='user_option'> -->
     <!-- 로그인 -->
     {% if user.is_authenticated %}
-      <div class= container>
+      <div class= container style="background-color: #FAFAFA; padding-top: 80px; padding-left: 50px; padding-right: 50px;" >
 
         <!-- 자동완성 script -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -987,7 +997,7 @@
       </html>
         
           <!-- tables -->
-        <table class="table">
+        <table class="table" style="margin-bottom: 600px;">
           <thead>
             <tr>
                 <!-- <th scope="col">#</th> -->
@@ -1004,7 +1014,7 @@
              </tr>
           </thead>
 
-          <tbody>
+          <tbody style="background-color: rgb(255, 255, 255) ; border-radius: 10px;">
             {% for i in info %}
               <tr>
                 <!-- <th scope="row">{{ i }}</th> -->

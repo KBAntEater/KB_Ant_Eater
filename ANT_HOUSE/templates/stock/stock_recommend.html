@@ -102,9 +102,17 @@
   </script>
 {% endblock scripts %}
 {% block content %}
- <div style="text-align:center"><p>소비 습관을 기반으로 한 종목 추천을 받아보세요!</p></div> 
+
+<style>
+  div#recommend_content{
+    margin-top: 100px;
+    font-size: 1.5em;
+  }
+
+</style>
+ <div id='recommend_content' style="text-align:center" ><p> <b>소비 습관을 기반으로 종목 추천을 받아보세요!</b></p></div> 
   <div class="chart-container">
-    <div class="legend-container">
+    <div  class="legend-container"> 
       <canvas id="myChart" width="700"></canvas>
       <div id='legend-div'></div>
     </div>
@@ -158,6 +166,9 @@
       </tbody>
     </table>
   </div>
+
+
+
 {% endblock %}
 
 {% comment %} 현재가, 주당배당금, 소비 돌려받기 {% endcomment %}

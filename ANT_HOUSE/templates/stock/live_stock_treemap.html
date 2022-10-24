@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 
-  <h1 style='color: black'>실시간 주식 트리맵</h1>
+<style>
+  div#recommend_content{
+   
+  
+    margin-top: 100px;
+    font-size: 1.8em;
+  }
 
-<div style="color : black">
-  <p align="middle"><iframe src="../static/charts/stock_treemap.html" 
+</style>
+ <div id='recommend_content' style="text-align:center" ><p> <b>실시간 주식 트리맵</b></p></div> 
+  
+
+<div style="color : black; align-content: center;">
+  <p ><iframe src="../static/charts/stock_treemap.html" 
     width="90%" height="1000" frameborder="0" framespacing="0"
      marginheight="0" marginwidth="0" scrolling="no" vspace="0"></iframe>
   </p>
