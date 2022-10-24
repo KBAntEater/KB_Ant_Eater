@@ -95,8 +95,8 @@ DATABASES = {
         'NAME': 'antdb',
         'USER': 'ant',
         'PASSWORD': 'roal', # mariaDB 설치 시 입력한 root 비밀번호 입력
-        # 'HOST': '192.168.0.69', # work
-        'HOST': '1.232.24.155', # home
+        'HOST': '192.168.0.69', # work
+        # 'HOST': '1.232.24.155', # home
         'PORT': '3306'
     }
 }
