@@ -46,9 +46,8 @@
       
     </div> 
 
-
-
-      {% for news in news_list %}
+      <div>
+        {% for news in news_list %}
         <div class="col">
           <div class="card border-dark mb-3"  style="width:1100px;border-radius: 10px;box-shadow: 5px 5px 5px 5px #e9ecef;">
             <div class="card-header bg-transparent">
@@ -74,6 +73,10 @@
         </div>
       
       {% endfor %}   
+      </div>
+
+      
+ 
   </div>
-  
-{% endblock %}
+  {% endblock %}
+
