@@ -1,12 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
 
-@font-face {
-  font-family: "BMHANNApro";
-  src: url("./BMHANNAPro.ttf") format("truetype");
+
+@font-face{
+  src: url('./KoPubWorld Dotum Light.ttf') format('truetype');
+  font-family: "kolight" ;
+}
+
+@font-face{
+  src: url('./KoPubWorld Dotum Medium.ttf') format('truetype');
+  font-family: "komedi" ;
 }
 
 body {
-  font-family: "BMHANNApro";
+  font-family: "komedi";
   color: #0c0c0c;
   background-color: #ffffff;
   overflow-x: hidden;
@@ -14,7 +20,7 @@ body {
 
 .layout_padding {
   padding: 90px 0;
-}
+}s
 
 .layout_padding2 {
   padding: 75px 0;
@@ -38,7 +44,7 @@ body {
 
 h1,
 h2 {
-  font-family: "BMHANNApro";
+  font-family:  "komedi";
 }
 
 .heading_container {
@@ -155,7 +161,7 @@ a:focus {
 }
 
 .navbar-brand {
-  font-family: "BMHANNApro";
+  font-family: "kolight";
 }
 
 .navbar-brand span {
@@ -445,13 +451,13 @@ a:focus {
 }
 
 .offer_section .box .detail-box h5 {
-  font-family: "BMHANNApro";
+  font-family: "kolight";
   font-size: 24px;
   margin: 0;
 }
 
 .offer_section .box .detail-box h6 {
-  font-family: "BMHANNApro";
+  font-family: "kolight";
   margin: 10px 0;
 }
 
@@ -924,7 +930,7 @@ a:focus {
 .footer_section .footer-logo {
   font-weight: 600;
   margin-bottom: 20px;
-  font-family: "BMHANNApro";
+  font-family: "kolight";
 }
 
 .footer_section p {

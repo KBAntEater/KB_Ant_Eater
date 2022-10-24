@@ -50,7 +50,7 @@
     <!-- 네비게이션바 템플릿 삽입-->
     {% comment %} {% include "navbar.html" %} {% endcomment %}
 
-    <div class="hero_area">
+    <div class="hero_area" style="margin-bottom: 10px;">
       <!-- header section strats -->
       <header class="header_section1">
         <div class="container">
@@ -173,7 +173,7 @@
     {% block content %}{% endblock %}
     <!-- 기본 템플릿 안에 삽입될 내용 End -->
     {% comment %} <section class="about_section layout_padding">
-      <div class="container  ">
+      <div class="container ">
 
         <div class="row">
           <div class="col-md-6 ">
@@ -204,24 +204,27 @@
 
     <!-- footer section -->
     <br>
-    <footer class="footer_section">
-      <div class="container">
+    <footer class="footer_section" >
+      <div class="container" style="margin-bottom: 100px ;" >
         <div class="row">
           <div class="col-md-4 footer-col">
             <div class="footer_contact">
               <h4>
-                Contact Us
+                <img src="../static/image/ant.png"  onerror="this.src='../../static/image/ant.png'" alt="Ant" style="width: 50px; height:50px">
+                <b>Ant House</b> 
+                
               </h4>
               <div class="contact_link_box">
                 <p href="">
                   <i class="fa fa-phone" aria-hidden="false"></i>
-                  <span>
-                    Call +01 1234567890
-                  </span>
+                  <div style='margin-left: 30px;' >
+                    
+
+                  </div>
                 </p>
                 <p href="">
                   <i class="fa fa-envelope" aria-hidden="false"></i>
-                  <span>
+                  <span style="margin-left: 50px;">
                     anteater@gmail.com
                   </span>
                 </p>
@@ -229,33 +232,40 @@
             </div>
           </div>
           <div class="col-md-4 footer-col">
-            <div class="footer_detail">
-              <p href="" class="footer-logo">
-                Feane
-              </p>
-              <p>
-                Necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with
+            <div class="footer-info">
+              <p style="margin-top: 20px;">
+                <p href="https://github.com/KBAntEater/KB_Ant_Eater">All Rights Reserved By Ant Eater</p>
+                <p href="https://github.com/KBAntEater/KB_Ant_Eater" target="_blank">Distributed By Ant Eater</p>
+                <br>
+                <br>
+
               </p>
             </div>
           </div>
           <div class="col-md-4 footer-col">
             <h4>
-              Opening Hours
+              <b>About us</b>
             </h4>
             <p>
-              Everyday
+              
             </p>
             <p>
-              10.00 Am -10.00 Pm
+              <img src="../static/image/instagram.png" onerror="this.src='../../static/image/instagram.png'" alt="instagram" style="width: 40px; height:40px">
+              <img src="../static/image/facebook.png"  onerror="this.src='../../static/image/facebook.png'" alt="facebook" style="width: 40px; height:40px">
+              <img src="../static/image/tweeter.png"  onerror="this.src='../../static/image/tweeter.png'" alt="tweeter" style="width: 40px; height:40px">
+              <p >
+                <br>
+                <a href="https://www.instagram.com/_nuyod/"  target="_blank" style="color: black;">김도윤</a>  
+              <a href="https://www.instagram.com/kakhaaaaaaaa/" target="_blank" style="color: black;">박하린</a>
+              <a href="https://www.instagram.com/h.annie.j/" target="_blank" style="color: black;">이현지</a>
+                <a href="https://www.instagram.com/joajoayoung/" target="_blank" style="color: black;">조하영</a>
+                <br>
+                <br>
+                <br>
             </p>
           </div>
         </div>
-        <div class="footer-info">
-          <p>
-            <p href="https://github.com/KBAntEater/KB_Ant_Eater">All Rights Reserved By Ant Eater</p>
-            <p href="https://github.com/KBAntEater/KB_Ant_Eater" target="_blank">Distributed By Ant Eater</p>
-          </p>
-        </div>
+
       </div>
     </footer>
     <!-- footer section -->
