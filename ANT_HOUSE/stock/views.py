@@ -1,6 +1,29 @@
 from django.shortcuts import render, redirect
 from .models import *
 
+from django.db import connection
+from django.contrib.auth.models import User
+import pandas as pd
+import numpy as np
+# import matplotlib.pyplot as plt
+# import plotly.express as px
+
+import pandas as pd
+import numpy as np
+# import FinanceDataReader as fdr
+# from pykrx import stock
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+import pandas as pd
+import numpy as np
+#import FinanceDataReader as fdr
+from pykrx import stock
+
+
 # Create your views here.
 # def index(request):
 #     return render(request, 'stock/live_stock_treemap.html')
