@@ -3,10 +3,22 @@
 
   <h1 style='color: black'>실시간 주식 트리맵</h1>
 
+  
 <div style="color : black">
-  <p align="middle">
-    {{fig}}
+  <p align="center">
+    <iframe  name="fig" width="268" height="100%"> </iframe>
   </p>
 </div>
+
+<form name="formAgent" method="POST" target="fig">
+  <input type=hidden name="NAME" value="가오리">
+</form>
+
+<script language="JavaScript">
+
+  document.formagent.target="fig";
+  document.formagent.submit();
+ 
+ </script>
 
 {% endblock %}
