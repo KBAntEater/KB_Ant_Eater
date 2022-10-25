@@ -123,12 +123,18 @@ def stock_recommend(request):
                         'c_type' : datas[i][1],
                         'dividend_yield'  : datas[i][2],
                     }
+                
                 else:
+                    if i < 6:
+                        back = 2
+                    elif i > 0 and i < 5:
+                        back = 1
                     row = {
                         'index' : i+1,
                         's_name': datas[i][0],
                         'c_type' : datas[i][1],
                         'dividend_yield'  : datas[i][2],
+                        'back' : back
                     }
                     theme.append(row)
 
@@ -138,7 +144,7 @@ def stock_recommend(request):
             connection.rollback()
             print("Failed")
 
-        ctx = {"logo" : 'samsung', "theme1" : theme1, 'theme' :theme, 'c_price' : format(87420, ','), 'c_type' : "생활", 'back' : (87420 // 20) // 12000}
+        ctx = {"logo" : 'samsung', "theme1" : theme1, 'theme' :theme, 'c_price' : format(87420, ','), 'c_type' : "생활", 'back' : (87420 // 20) // 12000, "back" : 2}
 
     return render(request, 'stock/stock_recommend.html', ctx)
 
@@ -180,8 +186,7 @@ def my_stock(request):
         strSql = f"""select a.id, a.username, m.s_ticker, s.s_name, s.s_kospi_section, new.open, new.high, new.low, new.s_volume  
                     from auth_user as a 
                     join mystock as m on a.id = m.user_id 
-                    join stock as s on m.s_ticker = s.s_ticker 
-                    join stock_new as new on m.s_ticker = new.s_ticker 
+                    join stock as s on m.s_ticker = s.s_ticker  
                     where a.username = '{request.user.username}'
                     AND new.s_date=(SELECT max(s_date) FROM stock_new);"""
         result = cursor.execute(strSql)
