@@ -1,174 +1,187 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  window.onload = function () {
+    pieChartDraw();
 
-{% block scripts %}
-  <script>
-    window.onload = function () {
-      pieChartDraw();
+    document.getElementById("legend-div").innerHTML =
+      window.chart.generateLegend();
 
-      document
-        .getElementById('legend-div')
-        .innerHTML = window
-        .chart
-        .generateLegend();
-
-      setLegendOnClick();
-    }
-
-    const data = {
-      labels: [
-        "생활/마트", "외식", "카페/간식", "교통", "그 외"
-      ],
-
-      datasets: [
-        {
-          // label: 'My First Dataset',
-          data: [
-            300, 100, 50, 20, 10
-          ],
-          // 생활/마트 116	82	219 
-          // 외식 83	132	239
-          // 카페/간식 88	192	171
-          // 교통 79	174	205
-          // 그 외 127	132	140
-          backgroundColor: [
-            'rgb(116,	82,	219)', 'rgb(83,	132,	239)', 'rgb(88,	192,	171)', 'rgb(79,	174,	205)', 'rgb(127,	132,	140)'
-          ],
-          hoverOffset: 4
-        }
-      ]
-    };
-
-    const pieChartDraw = () => {
-      let ctx = document
-        .getElementById('myChart')
-        .getContext('2d');
-
-      // chart
-      // var chart = new Chart(ctx, config);
-      window.chart = new Chart(ctx, config);
-    }
-
-    // customLegend
-    let customLegend = function (chart) {
-      let ul = document.createElement('ul');
-      let color = data
-        .datasets[0]
-        .backgroundColor;
-
-      let consumData = data
-        .datasets[0]
-        .data
-
-        chart
-        .data
-        .labels
-        .forEach(function (label, index) {
-          ul.innerHTML += `<form><div style="cursor:pointer;"><li><span style="background-color: ${color[index]};"></span> ${label}</li>
-          <li>${consumData[index]} 원</li></div></form>
-          `;
-        });
-
-      return ul.outerHTML;
-    };
-
-    let setLegendOnClick = function () {
-      let liList = document.querySelectorAll('#legend-div ul li');
-      let caption = document.querySelectorAll('.table caption')
-      console.log(caption)
-      for (let element of liList) {
-          element.onclick = function () {
-            let target = event.target.innerText
-            console.log(target)
-            caption[0].innerText = target      
-          }
-      }
+    setLegendOnClick();
   };
-  
 
-    const options = {
-      responsive: false,
-      legend: {
-        display: false
+  // 고객 데이터
+  const data = {
+    labels: [
+      "생활",
+      "쇼핑",
+      "식비",
+      "교통/자동차",
+      "문화/여가",
+      "의료/건강",
+      "기타",
+    ],
+
+    datasets: [
+      {
+        data: ["87420", "74000", "65500", "33700", "23600", "10700", "10000"],
+
+        backgroundColor: [
+          "rgb(116,	82,	219)",
+          "rgb(83,	132,	239)",
+          "rgb(88,	192,	171)",
+          "rgb(79,	174,	205)",
+          "rgb(112,12,84)",
+          "rgb(235,219,152)",
+          "rgb(248,66,82)",
+        ],
+        hoverOffset: 4,
       },
-      legendCallback: customLegend
+    ],
+  };
+
+  const consumeCount = [20, 9, 25, 10, 2, 3, 5]
+
+  // 차트 그리는 함수
+  const pieChartDraw = () => {
+    let ctx = document.getElementById("myChart").getContext("2d");
+
+    window.chart = new Chart(ctx, config);
+  };
+
+  // 금액에 콤마 추가해주는 함수
+  const addComma = (m) => {
+    return m.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const color = data.datasets[0].backgroundColor;
+
+  const consumData = data.datasets[0].data;
+
+  // 레전드 생성 함수
+  let customLegend = function (chart) {
+    let ul = document.createElement("ul");
+    const consumData = data.datasets[0].data;
+
+    chart.data.labels.forEach(function (label, index) {
+      ul.innerHTML += `<form action="" method="POST">{% csrf_token %}<div><input id="c_type" name="c_type" value=${label} style="display: none;" value={{c_type}}></input><button type="submit" style="cursor:pointer;"><li><span style="background-color: ${color[index]};"></span> ${label}</li><div style="display: flex;"><input id="c_count" name="c_count" value=${consumeCount[index]} style="display: none;"></input><li id="c_count" name="c_count" value=${consumeCount[index]} style="margin: 0px 20px 0px 0px;">${consumeCount[index]} 회</li><input id="c_price" name="c_price" value=${consumData[index]} style="display: none;"></input><li id="c_price" name="c_price" value=${consumData[index]}>${addComma(consumData[index])} 원</li></div></button></div></form>`;
+    });
+
+    return ul.outerHTML;
+  };
+
+  // 레전드 클릭시 실행되는 함수
+  let setLegendOnClick = function () {
+    let liList = document.querySelectorAll("#legend-div li");
+    let caption = document.querySelectorAll(".table caption");
+    // let consume_pattern = document.querySelectorAll("#consume_pattern")
+    let c_price = document.querySelectorAll("#c_price");
+    let s_count = document.querySelectorAll("#s_count");
+
+    // for (let element of liList) {
+    //   element.onclick = function (e) {
+    //   c_price.innerText
+    //     //consume_pattern.innerText = e.target.value
+
+    //   };
+    // }
+
+    for (let i = 0; i < liList.length; i++) {
+      liList[i].onclick = function (e) {
+        console.log(c_price);
+        c_price.innerText = consumData[i];
+      };
     }
+  };
 
-    // config
-    const config = {
-      type: 'doughnut',
-      data: data,
-      options: options
-    }
-  </script>
-{% endblock scripts %}
-{% block content %}
+  {% comment %} <form action="" method="POST">
+    {% csrf_token %}
+    <div>
+      <input id="c_type" name="c_type" value=${label} style="display: none;" value={{c_type}}></input>
+      <button type="submit" style="cursor:pointer;">
+        <li><span style="background-color: ${color[index]};"></span> ${label}</li>
+        <input id="c_price" name="c_price" value=${consumData[index]} style="display: none;" value={{consumData[index]}}></input>
+        <li>${addComma(consumData[index])} 원</li>
+        <li>${consumeCount[index]} 회</li>
+      </button>
+    </div>
+  </form> {% endcomment %}
 
-<style>
-  div#recommend_content{
-    margin-top: 100px;
-    font-size: 1.5em;
-  }
+  // 차트 옵션
+  const options = {
+    responsive: false,
+    legend: {
+      display: false,
+    },
+    legendCallback: customLegend,
+  };
 
-</style>
- <div id='recommend_content' style="text-align:center" ><p> <b>소비 습관을 기반으로 종목 추천을 받아보세요!</b></p></div> 
-  <div class="chart-container">
-    <div  class="legend-container"> 
-      <canvas id="myChart" width="700"></canvas>
-      <div id='legend-div'></div>
+  // 차트 config
+  const config = {
+    type: "doughnut",
+    data: data,
+    options: options,
+  };
+</script>
+{% endblock scripts %} {% block content %}
+
+<p class="recommend-p">소비 습관을 분석을 통해 종목 추천을 받아보세요!</p>
+<div class="chart-container">
+  <div class="legend-container">
+    <p class="consume-title">
+      이번달은
+      <span style="color: rgb(116, 82, 219); font-size:26px;">생활</span>
+      에 가장 많이 소비하고 있어요.
+    </p>
+    <canvas id="myChart" width="700"></canvas>
+    <div id="legend-div"></div>
+  </div>
+  <div class="consume">
+    <div>
+      {% comment %} <p style="margin-bottom: 15px; font-size: 20px; color: #666">
+        {{c_type}}
+      </p> {% endcomment %}
+      <p class="recommend1">
+        이번달 <span>{{c_type}}</span> 에 <span id="c_price">{{c_price}}</span> 원을
+        쓰셨네요!
+      </p>
+      <div class="recommend1-logo"style="display : flex;">
+        <div style='background-image:url(../../static/logo/{{logo}}.png)' class="logo-img"></div>
+        {% comment %} <img src="../../static/logo/{{logo}}.png" class="logo-img"> {% endcomment %}
+          <div>
+          <p class="recommend1">추천 1순위 종목은 <span>{{theme1.s_name}}</span> 입니다.</p>
+          <p class="recommend1">
+            주당 배당금은 <span>{{theme1.dividend_yield}}</span> 원 입니다.
+          </p>
+          <p class="recommend1">
+            소비를 돌려받기 위해 <span id="s_count">{{back}}</span> 주 를 추천드립니다.
+          </p>
+        </div>
+      </div>
+      {% comment %}
+      <div id="consume_pattern">소비패턴</div>
+      {% endcomment %}
     </div>
     <table class="table caption-top">
-      <caption style="margin-bottom : 15px; font-size : 20px;">생활/마트</caption>
-      <thead>
+      <thead style="font-size: 22px">
         <tr>
+          <th scope="col">순위</th>
           <th scope="col">종목명</th>
-          <th scope="col">현재가</th>
-          <th scope="col">주당배당금</th>
+          <th scope="col">1주당 배당금</th>
           <th scope="col">소비 돌려받기</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style="font-size: 20px">
+        {% for t in theme %}
         <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <th scope="row">{{t.index}}</th>
+          <th scope="row">{{t.s_name}}</th>
+          <td>{{t.dividend_yield}} 원</td>
+          <td>{{t.back}} 주</td>
         </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-        <tr>
-          <th scope="row">6</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
-
-
-
+</div>
 {% endblock %}
-
-{% comment %} 현재가, 주당배당금, 소비 돌려받기 {% endcomment %}
