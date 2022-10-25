@@ -51,13 +51,11 @@ def my_stock(request):
         cursor = connection.cursor()
         # 4 = annie / lhj991202
         # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
-        strSql = f"""select a.id, a.username, m.s_ticker, s.s_name, s.s_kospi_section, new.open, new.high, new.low, new.s_volume  
+        strSql = f"""select a.id, a.username, m.s_ticker, s.s_name, s.s_kospi_section 
                     from auth_user as a 
                     join mystock as m on a.id = m.user_id 
                     join stock as s on m.s_ticker = s.s_ticker 
-                    join stock_new as new on m.s_ticker = new.s_ticker 
-                    where a.username = '{request.user.username}'
-                    AND new.s_date=(SELECT max(s_date) FROM stock_new);"""
+                    where a.username = '{request.user.username}';"""
         result = cursor.execute(strSql)
         datas = cursor.fetchall()
 

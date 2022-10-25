@@ -4,10 +4,13 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-
-@font-face {
-  font-family: "BMHANNApro";
-  src: url("./BMHANNAPro.ttf") format("truetype");
+ @font-face{
+  src: url('./KoPubWorld Dotum Light.ttf') format('truetype');
+  font-family: "kolight" ;
+}
+@font-face{
+  src: url('./KoPubWorld Dotum Medium.ttf') format('truetype');
+  font-family: "komedi" ;
 }
 
 :root {
@@ -53,7 +56,9 @@
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 255, 255, 255;
-  --bs-font-BM-HANNA: "BMHANNApro";
+  /* --bs-font-BM-HANNA: "BMHANNApro"; */
+  --bs-font-komedi : 'komedi';
+  --bs-font-kolight :'kolight';
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -64,7 +69,7 @@
     rgba(255, 255, 255, 0.15),
     rgba(255, 255, 255, 0)
   );
-  --bs-body-font-family: var(--bs-font-BM-HANNA);
+  --bs-body-font-family: var(--bs-font-komedi);
   --bs-body-font-size: 1rem;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -5488,7 +5493,7 @@ fieldset:disabled .btn {
   z-index: 1080;
   display: block;
   margin: 0;
-  font-family: var(--bs-font-BM-HANNA);
+  font-family: var(--bs-font-komedi);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -5596,7 +5601,7 @@ fieldset:disabled .btn {
   z-index: 1070;
   display: block;
   max-width: 276px;
-  font-family: var(--bs-font-BM-HANNA);
+  font-family: var(--bs-font-komedi);
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
