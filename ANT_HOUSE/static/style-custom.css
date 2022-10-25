@@ -91,4 +91,37 @@
 
 .table tbody tr td {
   height: 70px;
+  padding-top: 22px;
+}
+
+.card-content {
+  margin-bottom: 26px;
+  font-size: 19px;
+}
+
+.black_header {
+  box-shadow: 5px 5px 5px 5px #e9ecef;
+}
+
+.nav-item {
+  font-size: 20px;
+  margin-right: 30px;
+  font-weight: 700;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.footer_grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer_item1 {
+  width: 250px;
+}
+
+.footer_item2 {
+  width: 280px;
 }
