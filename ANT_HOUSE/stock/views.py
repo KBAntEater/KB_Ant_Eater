@@ -30,10 +30,16 @@ def my_stock(request):
             result = cursor.execute(strSql)
             s_ticker = cursor.fetchone()[0]
 
-            # 4 = annie / lhj991202
-            # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
-            strSql = f"INSERT INTO mystock (user_id, s_ticker) VALUES ({user_id}, '{s_ticker}')"
+
+            strSql = f"SELECT user_id, s_ticker FROM mystock WHERE user_id = {user_id} AND s_ticker = '{s_ticker}'"
             result = cursor.execute(strSql)
+            exist = cursor.fetchall()
+
+            if exist == (): # empty
+                # 4 = annie / lhj991202
+                # strSql = f"SELECT id, username FROM auth_user WHERE username = '{request.user.username}'; "
+                strSql = f"INSERT INTO mystock (user_id, s_ticker) VALUES ({user_id}, '{s_ticker}')"
+                result = cursor.execute(strSql)
 
             connection.commit()
             connection.close()
