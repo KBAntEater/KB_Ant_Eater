@@ -1,39 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<!--
-<style>
-  div#recommend_content{
-    margin-top: 100px;
-    margin-left: 80px;
-    font-size: 1.5em;
-  }
-
-</style>
-<div id='recommend_content'  ><p id = 'current_date' style='margin-bottom: 10px;'></p></div> 
-
-      <script>
-        date = new Date();
-        var week = new Array('일', '월', '화', '수', '목', '금', '토');
-        year = date.getFullYear();
-        month = date.getMonth() + 1;
-        day = date.getDate();
-        week_day = week[date.getDay()];
-        document.getElementById("current_date").innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일';
-      </script>-->
-
+  <!-- <style> div#recommend_content{ margin-top: 100px; margin-left: 80px; font-size: 1.5em; } </style> <div id='recommend_content' ><p id = 'current_date' style='margin-bottom: 10px;'></p></div> <script> date = new Date(); var week = new Array('일', '월', '화', '수', '목', '금', '토'); year = date.getFullYear(); month = date.getMonth() + 1; day = date.getDate(); week_day = week[date.getDay()]; document.getElementById("current_date").innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일'; </script>-->
 
   <div class="container" style='padding-top:50px; display: flex; flex-direction: column; align-items: center; '>
     <div>
       <style>
-        div#recommend_content{
-          margin-top: 0px;
-          margin-left: 0px;
+        div#recommend_content {
+          margin-top: 0;
+          margin-left: 0;
           font-size: 1.5em;
+          font-weight: 700;
         }
-      
       </style>
-      <div id='recommend_content' ><p id = 'current_date' style='margin-bottom: 10px;'></p></div> 
-         
+      <div id='recommend_content'>
+        <p id='current_date' style='margin-bottom: 10px;'></p>
+      </div>
+
       <script>
         date = new Date();
         var week = new Array('일', '월', '화', '수', '목', '금', '토');
@@ -41,27 +23,36 @@
         month = date.getMonth() + 1;
         day = date.getDate();
         week_day = week[date.getDay()];
-        document.getElementById("current_date").innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일';
+        document
+          .getElementById("current_date")
+          .innerHTML = year + '년 ' + month + "월 " + day + "일 " + week_day + '요일';
       </script>
-      
-    </div> 
 
-      <div>
-        {% for news in news_list %}
+    </div>
+
+    <div>
+      {% for news in news_list %}
         <div class="col">
-          <div class="card border-dark mb-3"  style="width:1100px;border-radius: 10px;box-shadow: 5px 5px 5px 5px #e9ecef;">
+          <div class="card border-dark mb-3" style="width:1100px;border-radius: 10px;box-shadow: 5px 5px 5px 5px #e9ecef;">
             <div class="card-header bg-transparent">
               <div>
-                <p class='card-text' style='font-size: 25px; margin-top: 10px;'>
+                <p class='card-text' style='font-size: 29px; margin-top: 10px; font-weight : 700;'>
                   {{ news.news_title }}
                 </p>
                 <p class='card-text' style='font-size : 13px;'>
-                  {{ news.news_src }}, {{ news.news_rep }} 기자, {{news.news_date}}
+                  {{ news.news_src }},
+                  {{ news.news_rep }}
+                  기자,
+                  {{news.news_date}}
                 </p>
               </div>
-              <!-- <a href = '{% url news.news_url %'}  > {{news.news_url}} </button> -->
-              <a href = "{{news.news_url}}">
-                <input type="button" value='자세히 보기' class="btn btn-primary btn-detail">
+              <!-- <a href = '{% url news.news_url %'} > {{news.news_url}} </button> -->
+              <a href="{{news.news_url}}">
+                <input type="button" value='자세히 보기' class="btn btn-primary btn-detail" style="margin: 7px 0px;
+                width: 100px;
+                height: 40px;
+                font-size: 15.5px;
+                font-weight: 700;">
               </a>
             </div>
             <div class="card-body" style='line-height: 33px;'>
@@ -71,12 +62,9 @@
             </div>
           </div>
         </div>
-      
-      {% endfor %}   
-      </div>
 
-      
- 
+      {% endfor %}
+    </div>
+
   </div>
-  {% endblock %}
-
+{% endblock %}

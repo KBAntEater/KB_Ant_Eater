@@ -4,13 +4,13 @@
  * Copyright 2011-2021 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
- @font-face{
-  src: url('./KoPubWorld Dotum Light.ttf') format('truetype');
-  font-family: "kolight" ;
+@font-face {
+  src: url("./KoPubWorld Dotum Light.ttf") format("truetype");
+  font-family: "kolight";
 }
-@font-face{
-  src: url('./KoPubWorld Dotum Medium.ttf') format('truetype');
-  font-family: "komedi" ;
+@font-face {
+  src: url("./KoPubWorld Dotum Medium.ttf") format("truetype");
+  font-family: "komedi";
 }
 
 :root {
@@ -57,8 +57,8 @@
   --bs-body-color-rgb: 33, 37, 41;
   --bs-body-bg-rgb: 255, 255, 255;
   /* --bs-font-BM-HANNA: "BMHANNApro"; */
-  --bs-font-komedi : 'komedi';
-  --bs-font-kolight :'kolight';
+  --bs-font-komedi: "komedi";
+  --bs-font-kolight: "kolight";
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -9901,6 +9901,7 @@ fieldset:disabled .btn {
 
 .header_section1 {
   padding: 15px 0;
+  box-shadow: 5px 5px 5px 5px #e9ecef;
 }
 
 .header_section1 .container-fluid {
@@ -9988,9 +9989,4 @@ a:focus {
   position: absolute;
   right: 16px;
   top: 17.5px;
-}
-
-.card-content {
-  margin-bottom: 26px;
-  font-size : 22px;
 }
