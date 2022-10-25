@@ -1,12 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>{{ user.username }}
-    님의 주식</h1>
+
+  <style>
+    div#recommend_content {
+      margin-top: 100px;
+      font-size: 1.5em;
+      margin-bottom: 100px;
+    }
+  </style>
+  <div class="container">
+    <div class="item" style="width: 300px;"></div>
+    <div class="item" id='recommend_content' style="text-align:center; ">
+      <p style="box-shadow:inset 0 -4px 0 rgb(248, 210, 140); line-height: 30px;">
+        <b>{{ user.username }}
+          님의 주식</b>
+      </p>
+    </div>
+    <div class="item"></div>
+  </div>
 
   <!-- <div class='user_option'> -->
   <!-- 로그인 -->
   {% if user.is_authenticated %}
-    <div class="container">
+    <div class="container" style="background-color: #FAFAFA; padding-top: 80px; padding-left: 50px; padding-right: 50px;">
 
       <!-- 자동완성 script -->
       <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -958,13 +974,19 @@
             '흥아해운'
           ];
           $("#tags").autocomplete({source: availableTags});
+
+          $("#in_f").submit(function () {
+            if ($("#tags").val() == "") 
+              return false
+          })
+
         });
       </script>
 
       <body>
 
         <!-- 검색창 -->
-        <form action="" method="POST">
+        <form action="" method="POST" id="in_f">
           {% csrf_token %}
           <div class="case" style="width : 40%;">
             <div class="input_wrap">
@@ -979,7 +1001,47 @@
 
     </html>
 
-    <<<<<<< HEAD <!-- tables --> <table class="table"> <thead> <tr> <!-- <th scope="col">#</th> --> <!-- <th scope="col">Ticker</th> --> <th scope="col">종목명</th> <th scope="col">시가</th> <th scope="col">고가</th> <th scope="col">저가</th> <th scope="col">업종</th> <th scope="col">판매량</th> <!-- <th scope="col">삭제</th> --> </tr> </thead> <tbody> {% for i in info %} <tr> <!-- <th scope="row">{{ i }}</th> --> <td>{{ i.s_name }}</td> <td>{{ i.open }}</td> <td>{{ i.high }}</td> <td>{{ i.low }}</td> <td>{{ i.s_kospi_section }}</td> <td>{{ i.s_volume }}</td> <!-- <td> <form action="delet" method="POST"> {% csrf_token %} <button type="submit" id= '{{ i.s_name }}' lass="btn btn-outline-primary case_search_btn" >X</button> </form> </td> --> </tr> {% endfor %} </tbody> </table> ======= <tbody style="background-color: rgb(255, 255, 255) ; border-radius: 10px;"> {% for i in info %} <tr> <!-- <th scope="row">{{ i }}</th> --> <td>{{ i.s_name }}</td> <td>{{ i.s_price }}</td> <td>{{ i.open }}</td> <td>{{ i.high }}</td> <td>{{ i.low }}</td> <td>{{ i.s_kospi_section }}</td> <td>{{ i.s_volume }}</td> <td> <form action="delete" method="POST"> {% csrf_token %} <button type="submit" class="btn btn-outline-primary">X</button> <input type="hidden" name='s_name' value="{{ i.s_name }}"> <!-- <input type="submit" label='X' name = {{i.s_name}} class="btn btn-outline-primary case_search_btn" ></button> --> </form> </td> </tr> {% endfor %} </tbody> </table> >>>>>>> main
+    <!-- tables -->
+    <table class="table" style="margin-bottom: 600px;">
+      <thead>
+        <tr>
+          <!-- <th scope="col">#</th> -->
+          <!-- <th scope="col">Ticker</th> -->
+          <th scope="col">종목명</th>
+          <th scope="col">현재가</th>
+          <th scope="col">시가</th>
+          <th scope="col">고가</th>
+          <th scope="col">저가</th>
+          <th scope="col">업종</th>
+          <th scope="col">거래량</th>
+          <th scope="col">삭제</th>
+
+        </tr>
+      </thead>
+
+      <tbody style="background-color: rgb(255, 255, 255) ; border-radius: 10px;">
+        {% for i in info %}
+          <tr>
+            <!-- <th scope="row">{{ i }}</th> -->
+            <td>{{ i.s_name }}</td>
+            <td>{{ i.s_price }}</td>
+            <td>{{ i.open }}</td>
+            <td>{{ i.high }}</td>
+            <td>{{ i.low }}</td>
+            <td>{{ i.s_kospi_section }}</td>
+            <td>{{ i.s_volume }}</td>
+            <td>
+              <form action="delete" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary">X</button>
+                <input type="hidden" name='s_name' value="{{ i.s_name }}">
+                <!-- <input type="submit" label='X' name = {{i.s_name}} class="btn btn-outline-primary case_search_btn" ></button> -->
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     <!-- 로그아웃 -->
   {% else %}
     <script>
