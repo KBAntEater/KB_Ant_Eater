@@ -8,33 +8,47 @@ from .models import *
 def stock_recommend(request):
     def get_stock_logo(c_type):
         if c_type == '생활':
-            return 'samsung'
-        elif c_type == '쇼핑':
-            return 'ssg'
-        elif c_type == '식비' or c_type == '의료/건강':
-            return 'lg'
-        elif c_type == '교통/자동차' or c_type == '기타':
-            return 'hs'
+            return 'kyobo'
+        elif c_type == '쇼핑' or c_type == '의료/건강':
+            return 'lotte'
+        elif c_type == '식비' :
+            return 'shilla'
+        elif c_type == '교통/자동차':
+            return 'donga'
         elif c_type == '문화/여가':
-            return 'sk'
+            return 'hanhwa'
+        elif c_type == '기타':
+            return 'hd'
+# ['', '', 'BNK금융지주', '', '', '', '롯데하이마트', '', '', '', '화승인더', '', '신라교역', '', '하이트진로홀딩스', '대상', '', '', '동아타이어', '태영건설', '', '', 'DL이앤씨', '', '한화투자증권', 'SK텔레콤', '', 'KT', '', '이노션', '', 'SK텔레콤', '휴비스', '', '&G', 'KT', 'HD현대', '세아베스틸지주', '', 'BNK금융지주', '화성산업', '효성']
+#  ['교보증권', 'DGB금융지주', 'BNK금융지주', '효성', '부국증권', '현대차증권', '롯데하이마트', '광주신세계', '현대홈쇼핑', 'GS리테일', '화승인더', 'HDC', '신라교역', '대한제당', '하이트진로홀딩스', '대상', '조흥', '삼양사', '동아타이어', '태영건설', '한국가스공사', '금호석유', 'DL이앤씨', 'POSCO홀딩스', '한화투자증권', 'SK텔레콤', '지투알', 'KT', 'LG유플러스', '이노션', '롯데하이마트', 'SK텔레콤', '휴비스', '한국주철관', 'KT&G', 'KT', 'HD현대', '세아베스틸지주', 'DGB금융지주', 'BNK금융지주', '화성산업', '효성']
+
+    def get_predict(s_name):
+        if s_name in ['교보증권', 'BNK금융지주', '효성', '부국증권', "현대차증권", '광주신세계', '현대홈쇼핑', 'HDC', 'GS리테일', '대한제당', '조흥', '삼양사', '한국가스공사', '금호석유', 'POSCO홀딩스', '지투알', 'LG유플러스', '롯데하이마트','한국주철관', 'DGB금융지주', 'KT']:
+             return '상승'
+        else:
+            return '하락'
+         
 
     if request.method == "POST":
         c_type = request.POST.get('c_type')
         c_price = request.POST.get('c_price')
         c_count = request.POST.get('c_count')
 
-        global theme, theme1
+        global theme, theme1, back1
+        theme1 = {}
         theme = []
         logo = ""
+        predict = ''
+        back1 = 1
 
         try:
             cursor = connection.cursor()
 
-            strSql = f"""SELECT DISTINCT s.s_name, t.c_type, d.dividend_yield FROM theme AS t 
+            strSql = f"""SELECT DISTINCT s.s_name, t.c_type, d.dividend_yield, d.DIV FROM theme AS t 
                         JOIN stock AS s ON s.s_name = t.s_name
-                        JOIN dividend AS d ON d.s_ticker = s.s_ticker
+                        JOIN stock_div AS d ON d.s_ticker = s.s_ticker
                         WHERE c_type = '{c_type}'
-                        ORDER BY d.dividend_yield DESC;"""
+                        ORDER BY d.DIV DESC;"""
             result = cursor.execute(strSql)
             datas = cursor.fetchall()
 
@@ -42,16 +56,25 @@ def stock_recommend(request):
             connection.close()
 
             for i in range(0,6):
+                predict = get_predict(datas[i][0])
+
                 if i == 0:
                     theme1 = {
                         's_name': datas[i][0],
                         'c_type' : datas[i][1],
                         'dividend_yield'  : format(datas[i][2], ','),
+                        'div' : datas[i][3],
+                        'predict' : predict
                     }
+                    back1 = (int(c_price) // int(c_count)) // int(datas[i][2])
+                    if back1 == 0:
+                        back1 = 1
+
+                    print(theme1)
 
                 else:
-                    back = (int(c_price) // int(c_count)) // int(datas[i][2])
-        
+                    back = (int(c_price) // int(c_count)) // int(datas[i][2])    
+
                     if back == 0:
                         back = 1
                     row = {
@@ -59,34 +82,35 @@ def stock_recommend(request):
                         's_name': datas[i][0],
                         'c_type' : datas[i][1],
                         'dividend_yield'  : format(datas[i][2], ','),
+                        'div' : datas[i][3],
                         'back' : back,
+                        'predict' : predict
                     }
                     theme.append(row)
             
             c_price = format(int(c_price), ',')
-            print(c_price)
         
 
         except:
             connection.rollback()
             print("Failed")
 
-        ctx = {'logo' : get_stock_logo(c_type), 'c_type':c_type , 'c_price' : c_price, 'theme1' :theme1, 'theme' : theme, "back" : back }
+        ctx = {'logo' : get_stock_logo(c_type), 'c_type':c_type , 'c_price' : c_price, 'theme1' :theme1, 'theme' : theme, "back1" : back1 }
 
         print(theme)
         print(get_stock_logo(c_type))
 
     elif request.method == "GET":
-
         try:
             theme = []
+            predict = ""
             cursor = connection.cursor()
 
-            strSql = f"""SELECT DISTINCT s.s_name, t.c_type, d.dividend_yield FROM theme AS t 
+            strSql = f"""SELECT DISTINCT s.s_name, t.c_type, d.dividend_yield, d.DIV FROM theme AS t 
                         JOIN stock AS s ON s.s_name = t.s_name
-                        JOIN dividend AS d ON d.s_ticker = s.s_ticker
+                        JOIN stock_div AS d ON d.s_ticker = s.s_ticker
                         WHERE c_type = '생활'
-                        ORDER BY d.dividend_yield DESC;"""
+                        ORDER BY d.DIV DESC;"""
             result = cursor.execute(strSql)
             datas = cursor.fetchall()
 
@@ -94,11 +118,15 @@ def stock_recommend(request):
             connection.close()
 
             for i in range(0,6):
+                predict = get_predict(datas[i][0])
+                
                 if i == 0:
                     theme1 = {
                         's_name': datas[i][0],
                         'c_type' : datas[i][1],
-                        'dividend_yield'  : datas[i][2],
+                        'dividend_yield'  : format(datas[i][2], ','),
+                        'div' : datas[i][3],
+                        'predict' : predict
                     }
                 
                 else:
@@ -111,17 +139,17 @@ def stock_recommend(request):
                         's_name': datas[i][0],
                         'c_type' : datas[i][1],
                         'dividend_yield'  : datas[i][2],
-                        'back' : back
+                        'div' : datas[i][3],
+                        'back' : back,
+                        'predict' : predict
                     }
                     theme.append(row)
-
-            print(theme)
 
         except:
             connection.rollback()
             print("Failed")
 
-        ctx = {"logo" : 'samsung', "theme1" : theme1, 'theme' :theme, 'c_price' : format(87420, ','), 'c_type' : "생활", 'back' : (87420 // 20) // 12000, "back" : 2}
+        ctx = {"logo" : 'kyobo', "theme1" : theme1, 'theme' :theme, 'c_price' : format(87420, ','), 'c_type' : "생활", 'back1' : (87420 // 17) // 500}
 
     return render(request, 'stock/stock_recommend.html', ctx)
 
@@ -197,11 +225,11 @@ def my_stock(request):
                 's_ticker'  : data[2],
                 's_name' : data[3],
                 's_kospi_section' : data[4],
-                'open' : open,
-                'high' : high,
-                'low' : low,
-                's_volume' : s_volume,
-                's_price' : s_price
+                'open' : format(int(open), ','),
+                'high' : format(int(high), ','),
+                'low' : format(int(low), ','),
+                's_volume' : format(int(s_volume), ','),
+                's_price' : format(int(s_price), ',')
             }
             info.append(row)
             
