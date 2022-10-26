@@ -324,17 +324,50 @@ def index(request):
 
     updown.loc[updown['섹터'].isna(),'섹터']='우선주'
 
+    updown = updown.replace('S-Oil','S_Oil')
+    updown = updown.replace('S-Oil우','S_Oil우')
 
-    # Treemap 그리기
-    fig = px.treemap(updown, path=['시장구분','섹터','종목명'], values='시가총액',
-                    color='등락률',
-                    hover_data=['등락률','종목코드'],
+    txt='[{name: KOSPI, children: ['+'\n'
+    for 섹터 in updown['섹터'].unique() :
+        txt+='    {name: '+섹터+', children: ['+'\n'
+
+        종목 = updown[updown['섹터']==섹터]['종목명']
+        등락 = updown[updown['섹터']==섹터]['등락률']      
+        시가 = updown[updown['섹터']==섹터]['시가총액'] 
+
+        for 종목명, 시가총액 in zip(종목, 시가):
+            txt+='        {name: '+ 종목명 +', value: '+ str(시가총액) +'},'+'\n'
+        txt+='    ]},'+'\n'
+    txt+=']'+'\n'+'}]'
+
+    # print(txt)
+
+    # with open("TextFile.txt", "w+") as file :
+    #     txt="var KOSPI = 'KOSPI';"+'\n'
+    #     for 섹터 in updown['섹터'].unique() :
+    #         txt+="var " + 섹터 + " = '" + 섹터 + "';"+'\n'
+    #         종목 = updown[updown['섹터']==섹터]['종목명']
+    #         등락 = updown[updown['섹터']==섹터]['등락률']      
+    #         시가 = updown[updown['섹터']==섹터]['시가총액'] 
+
+    #         for 종목명, 등락률, 시가총액 in zip(종목, 등락, 시가):
+    #             txt+="var " + 종목명 + " = '" + 종목명 + "';" +'\n'
+    #     file.write(txt)
+    # file.close()
+
+             
+    # updown.to_excel('KB_Ant_Eater\ANT_HOUSE\stock','updown.xlsx')
+
+    # # Treemap 그리기
+    # fig = px.treemap(updown, path=['시장구분','섹터','종목명'], values='시가총액',
+    #                 color='등락률',
+    #                 hover_data=['등락률','종목코드'],
                     
-                    range_color=(-0.3,0.3),color_continuous_scale='RdBu')
-    fig.update_traces(textposition='middle center',text = updown['등락률'])
-    fig.update_traces(textfont_color='white',textfont_size=25)
+    #                 range_color=(-0.3,0.3),color_continuous_scale='RdBu')
+    # fig.update_traces(textposition='middle center',text = updown['등락률'])
+    # fig.update_traces(textfont_color='white',textfont_size=25)
 
-    fig.update_layout(height=800)
-    
-    ctx = {'updown':updown, 'fig': fig}
-    return render (request, 'stock/treemap.html')
+    # fig.update_layout(height=800)
+    # fig.show()
+    ctx = {'updown':updown, 'txt':txt}#, 'fig': fig}
+    return render (request, 'stock/treemap.html', ctx)
