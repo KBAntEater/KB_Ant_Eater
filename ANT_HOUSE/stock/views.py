@@ -251,7 +251,7 @@ def index(request):
     from django.db import connection
 
 
-    today = datetime.datetime.today().strftime("%Y%m%d")
+    today = int(datetime.datetime.today().strftime("%Y%m%d"))
 
     cursor = connection.cursor()
     
@@ -261,7 +261,8 @@ def index(request):
     updown=pd.DataFrame()
 
     # 코스피 등락률 가져오기 
-    updown=stock.get_market_price_change_by_ticker(today, today)
+    updown=stock.get_market_price_change_by_ticker(str(today), str(today))
+
     updown['종목코드']=updown.index
 
     # 코스피 섹터 가져오기 
@@ -270,7 +271,7 @@ def index(request):
     sector = stocks[[0, 2]].to_numpy() # s_ticker, sector
 
     # 코스피 사이즈 가져오기 
-    size = stock.get_market_cap(today)
+    size = stock.get_market_cap(str(today))
     
     # ticker를 안에 넣어주기 
     size['s_ticker']= size.index
@@ -312,10 +313,11 @@ def index(request):
         등락 = updown[updown['섹터']==섹터]['등락률']      
         시가 = updown[updown['섹터']==섹터]['시가총액'] 
 
-        for 종목명, 시가총액 in zip(종목, 시가):
-            txt+='        {name: '+ 종목명 +', value: '+ str(시가총액) +'},'+'\n'
+        for 종목명, 등락률, 시가총액 in zip(종목, 등락, 시가):
+            txt+='        {name: '+ 종목명 +', size: '+ str(시가총액) +', value: '+ str(등락률) +' },'+'\n'
         txt+='    ]},'+'\n'
     txt+=']'+'\n'+'}]'
+
 
     # print(txt)
 

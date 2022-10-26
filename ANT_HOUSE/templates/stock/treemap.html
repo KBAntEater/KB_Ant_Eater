@@ -5,7 +5,7 @@
 <style>
   html, body, #container {
     width: 100%;
-    height: 100%;
+    height: 80%;
     margin: 0;
     padding: 0;
   }
@@ -24,11 +24,14 @@
       // create a chart and set the data
       chart = anychart.treeMap(treeData);
 
-      // set the depth of hints
-      chart.hintDepth(2);
+      // set the maximum depth of levels shown
+      chart.maxDepth(2);
 
-      // configure labels
-      chart.labels().format("{%name}");
+      // set the depth of hints
+      chart.hintDepth(1);
+
+      // set the opacity of hints
+      chart.hintOpacity(0.7);  
 
       /* listen to the chartDraw event
       and add the drilldown path to the chart title */
@@ -40,7 +43,64 @@
         chart.title("Treemap: Interactivity (Drilling Down and Up)<br><br>Path: " +
                     "<span style = 'color:#990000; font-style:italic'>" +
                     text + "</span>");
+
+        chart.labels().useHtml(true);
+        // configure labels
+        // chart.labels().adjustFontSize(true);
+        chart.labels().format(
+          "<span style='font-size: {%size}/100000000000;font-weight:bold;'>{%name}</span><br>"
+          +"<span style='font-size:  {%size}/50000000000;font-weight:bold;'>{%value}</span>"
+        );
+
+        // configure tooltips
+        chart.tooltip().format(
+          "시가총액: {%size}\n등락률: {%value}%"
+        );
+
+        chart.hovered().headers().format("{%name}");
+
+        // configure the font of headers
+        chart.normal().headers().fontColor("#990000");
+        chart.normal().headers().fontSize("14");
+        chart.normal().headers().fontWeight('bold');
+        chart.hovered().headers().fontColor("#000099");
+
+        // configure the text of headers in the hovered state
       });
+
+      function headersEnabled(enabled) {
+        chart.headers(enabled);
+      }
+
+
+
+      var customColorScale = anychart.scales.ordinalColor();
+      customColorScale.ranges([
+        {less: -3},
+        // {from: -4, to: -3},
+        {from: -3, to: -2},
+        {from: -2, to: -1},
+        {from: -1, to: 0},
+        {from: 0, to: 1},
+        {from: 1, to: 2},
+        // {from: 2, to: 3},
+        {greater: 2}
+      ]);
+      customColorScale.colors(['#376eba','#3d5883','#434683', '#434653','#74404b', '#b43a41', '#f53538']);
+
+      // set the color scale as the color scale of the chart
+      chart.colorScale(customColorScale);
+
+      // add a color range
+      chart.colorRange().enabled(true);
+      chart.colorRange().length("90%");
+
+      chart.hovered().fill("gray", 0.4);
+      chart.selected().fill("gray", 0.6);
+      chart.selected().hatchFill("forward-diagonal", "gray", 2, 20);
+      chart.normal().stroke("gray");
+      chart.hovered().stroke("gray");
+      chart.selected().stroke("gray", 2);
 
       // set the container id
       chart.container("container");
@@ -1031,50 +1091,23 @@
       return text;
       }
 
-      // drill down to a data item
-      function drillToItem() {
-      /* locate an item in the data tree
-      and get it as an object */
-      var item = treeData.search("name", "Item 3-4");
-      // drill down to the item
-      chart.drillTo(item);
-      }
+      // // drill down to a data item
+      // function drillToItem() {
+      // /* locate an item in the data tree
+      // and get it as an object */
+      // var item = treeData.search("name", "Item 3-4");
+      // // drill down to the item
+      // chart.drillTo(item);
+      // }
 
-      // drill up a level
-      function drillUpALevel() {
-      chart.drillUp();
-      }
+      // // drill up a level
+      // function drillUpALevel() {
+      // chart.drillUp();
+      // }
     </script>
 
     <div id="container">
     </div>
-
-    <!-- <py-env>
-      - numpy
-      - pandas
-      - matplotlib.pyplot
-      - pykrx
-      - datetime
-      - django.db.connection
-      - squarify
-      - paths:
-        - ./views.py
-    </py-env>
-    <py-script output="treemap">
-      fig = matplotlib.pyplot.treemap(
-        {{updown}}, 
-        path=['시장구분','섹터','종목명'], 
-        values='시가총액',
-        color='등락률',
-        hover_data=['등락률','종목코드'],
-        range_color=(-0.3,0.3),
-        color_continuous_scale='RdBu')
-      fig.update_traces(textposition='middle center',text = {{ updown }})
-      fig.update_traces(textfont_color='white',textfont_size=25)
-
-      fig.update_layout(height=800)
-      fig
-    </py-script> -->
   </body>
 
 {% endblock %}
