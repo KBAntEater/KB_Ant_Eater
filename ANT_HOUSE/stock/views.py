@@ -335,6 +335,6 @@ def index(request):
     fig.update_traces(textfont_color='white',textfont_size=25)
 
     fig.update_layout(height=800)
-    fig.show()
+    
     ctx = {'updown':updown, 'fig': fig}
     return render (request, 'stock/treemap.html')
