@@ -3,14 +3,14 @@
 <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js"></script>
 <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-treemap.min.js"></script>
 <style>
-  html, body, #container {
-    width: 100%;
+  #container {
+    width: 85%;
     height: 80%;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
   }
 </style>
-<h1 style='color: black'>실시간 주식 트리맵</h1>
+<h1 style='text-align:center; color: black;'>실시간 주식 트리맵</h1>
   <body>
     <script>
       anychart.onDocumentReady(function () {
@@ -36,20 +36,14 @@
       /* listen to the chartDraw event
       and add the drilldown path to the chart title */
       chart.listen("chartDraw",function() {
-        // get the drilldown path and convert it to a string
-        var text = printPath(chart.getDrilldownPath());
-        // set the chart title
-        chart.title().useHtml(true);
-        chart.title("Treemap: Interactivity (Drilling Down and Up)<br><br>Path: " +
-                    "<span style = 'color:#990000; font-style:italic'>" +
-                    text + "</span>");
 
         chart.labels().useHtml(true);
         // configure labels
         // chart.labels().adjustFontSize(true);
+
         chart.labels().format(
-          "<span style='font-size: {%size}/100000000000;font-weight:bold;'>{%name}</span><br>"
-          +"<span style='font-size:  {%size}/50000000000;font-weight:bold;'>{%value}</span>"
+          "<span style='font-size: 120%; font-weight:bold;'>{%name}</span><br>"
+          +"<span style='font-size: 100%; font-weight:bold;'>{%value}</span>"
         );
 
         // configure tooltips
@@ -1080,30 +1074,6 @@
         return data;
       }
 
-      // convert the current drilldown path to a string
-      function printPath(path) {
-      /* go through the array of data items
-      and use the get() method to obtain the "name" field */
-      var text = "";
-      for (i = 0; i <  path.length; i++) { 
-      text += path[i].get("name") + "\\";
-      }
-      return text;
-      }
-
-      // // drill down to a data item
-      // function drillToItem() {
-      // /* locate an item in the data tree
-      // and get it as an object */
-      // var item = treeData.search("name", "Item 3-4");
-      // // drill down to the item
-      // chart.drillTo(item);
-      // }
-
-      // // drill up a level
-      // function drillUpALevel() {
-      // chart.drillUp();
-      // }
     </script>
 
     <div id="container">
