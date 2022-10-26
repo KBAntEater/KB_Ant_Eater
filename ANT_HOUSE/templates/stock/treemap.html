@@ -10,11 +10,11 @@
     padding: 0;
   }
 </style>
-<h1 style='text-align:center; color: black;'>실시간 주식 트리맵</h1>
+<!-- <h1 style='text-align:center; color: black;'>국내증시 코스피 MAP </h1> -->
   <body>
     <script>
       anychart.onDocumentReady(function () {
-
+      
       // get data
       var data = getData(); 
 
@@ -54,7 +54,7 @@
         chart.hovered().headers().format("{%name}");
 
         // configure the font of headers
-        chart.normal().headers().fontColor("#990000");
+        chart.normal().headers().fontColor("#ffbe33"); // theme font color
         chart.normal().headers().fontSize("14");
         chart.normal().headers().fontWeight('bold');
         chart.hovered().headers().fontColor("#000099");
@@ -87,13 +87,14 @@
 
       // add a color range
       chart.colorRange().enabled(true);
-      chart.colorRange().length("90%");
+      chart.colorRange().colorLineSize(20);
+      chart.colorRange().length("35%");
 
-      chart.hovered().fill("gray", 0.4);
+      // chart.hovered().fill("gray", 0.1);
       chart.selected().fill("gray", 0.6);
-      chart.selected().hatchFill("forward-diagonal", "gray", 2, 20);
-      chart.normal().stroke("gray");
-      chart.hovered().stroke("gray");
+      // chart.selected().hatchFill("forward-diagonal", "gray", 2, 20);
+      chart.normal().stroke("black",1); // chart line color
+      chart.hovered().stroke("gray",3);
       chart.selected().stroke("gray", 2);
 
       // set the container id
@@ -103,6 +104,23 @@
       chart.draw();
       });
 
+      //////////////////
+      var theme = {
+        treeMap: {
+            normal: {
+                headers: {
+                    background: {
+                        enabled: !0,
+                        fill: "#292d33", // theme moral color
+                        stroke: "2 black", // theme line color
+                        corners: 0
+                                }
+                        }
+                    }
+                }
+              };
+      anychart.theme(theme);
+      //////////////////
       // get data
       function getData() {
       // create data
@@ -994,7 +1012,7 @@
         var 한올바이오파마 = '한올바이오파마';
         var 현대약품 = '현대약품';
         var 환인제약 = '환인제약';
-        var No = 'No';
+        // var No = 'No';
         var KB스타리츠 = 'KB스타리츠';
         var 비금속광물 = '비금속광물';
         var KCC글라스 = 'KCC글라스';
@@ -1077,6 +1095,7 @@
     </script>
 
     <div id="container">
+      <h1 style='text-align:center; color: black; font-weight: 700; margin: 30px;'>국내증시 코스피 MAP </h1>
     </div>
   </body>
 

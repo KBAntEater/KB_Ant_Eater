@@ -304,6 +304,7 @@ def index(request):
 
     updown = updown.replace('S-Oil','S_Oil')
     updown = updown.replace('S-Oil우','S_Oil우')
+    updown = updown[updown['섹터']!='No']
 
     txt='[{name: KOSPI, children: ['+'\n'
     for 섹터 in updown['섹터'].unique() :
