@@ -44,6 +44,13 @@ class StockDb(models.Model):
     low = models.IntegerField()
     close = models.IntegerField()
     s_volume = models.IntegerField()
+    kospi = models.FloatField(blank=True, null=True)
+    kospi200 = models.FloatField(blank=True, null=True)
+    kospi100 = models.FloatField(blank=True, null=True)
+    kospi50 = models.FloatField(blank=True, null=True)
+    ixic = models.FloatField(db_column='IXIC', blank=True, null=True)  # Field name made lowercase.
+    snp500 = models.FloatField(db_column='SnP500', blank=True, null=True)  # Field name made lowercase.
+    hsi = models.FloatField(db_column='HSI', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -57,3 +64,37 @@ class Theme(models.Model):
     class Meta:
         managed = False
         db_table = 'theme'
+
+class StockDiv(models.Model):
+    s_ticker = models.CharField(max_length=255, blank=True, null=True)
+    div = models.CharField(db_column='DIV', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    dividend_yield = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'stock_div'
+
+class StockNew(models.Model):
+    s_ticker = models.CharField(max_length=50)
+    s_name = models.CharField(max_length=255)
+    s_date = models.DateField()
+    open = models.IntegerField()
+    high = models.IntegerField()
+    low = models.IntegerField()
+    close = models.IntegerField()
+    s_volume = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'stock_new'
+
+
+class StockPred(models.Model):
+    s_date = models.DateTimeField(blank=True, null=True)
+    s_ticker = models.IntegerField(blank=True, null=True)
+    s_name = models.CharField(max_length=50, blank=True, null=True)
+    predict = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'stock_pred'
