@@ -280,6 +280,7 @@ def index(request):
 
 
     today = int(datetime.datetime.today().strftime("%Y%m%d"))
+    time = int(datetime.datetime.now().hour)
 
     cursor = connection.cursor()
     
@@ -288,8 +289,11 @@ def index(request):
     stock_info=pd.DataFrame(cursor.fetchall())
     updown=pd.DataFrame()
 
-    # 코스피 등락률 가져오기 
-    updown=stock.get_market_price_change_by_ticker(str(today), str(today))
+    # 코스피 등락률 가져오기
+    if time >= 12 : 
+        updown=stock.get_market_price_change_by_ticker(str(today), str(today))
+    else :
+        updown=stock.get_market_price_change_by_ticker(str(today-1), str(today))
 
     updown['종목코드']=updown.index
 
@@ -299,7 +303,10 @@ def index(request):
     sector = stocks[[0, 2]].to_numpy() # s_ticker, sector
 
     # 코스피 사이즈 가져오기 
-    size = stock.get_market_cap(str(today))
+    if time >= 12 :
+        size = stock.get_market_cap(str(today))
+    else :
+        size = stock.get_market_cap(str(today-1))
     
     # ticker를 안에 넣어주기 
     size['s_ticker']= size.index
