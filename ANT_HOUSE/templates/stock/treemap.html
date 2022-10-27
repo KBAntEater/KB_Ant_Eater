@@ -43,12 +43,12 @@
 
         chart.labels().format(
           "<span style='font-size: 120%; font-weight:bold;'>{%name}</span><br>"
-          +"<span style='font-size: 100%; font-weight:bold;'>{%value}</span>"
+          +"<span style='font-size: 100%; font-weight:bold;'>{%value}%</span>"
         );
 
         // configure tooltips
         chart.tooltip().format(
-          "시가총액: {%size}\n등락률: {%value}%"
+          "시가총액: {%size}원\n등락률: {%value}%"
         );
 
         chart.hovered().headers().format("{%name}");
